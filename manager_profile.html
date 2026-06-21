@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Kind of Manager Are You?</title>
+    <meta property="og:title" content="What Kind of Manager Are You?">
+    <meta property="og:description" content="6-dimension leadership assessment backed by Harvard, Google, and McKinsey research. 5 minutes. Free.">
+    <meta property="og:image" content="https://ogforge.dev/api/v1?title=What+Kind+of+Manager+Are+You%3F&subtitle=6+dimensions+%E2%80%A2+Harvard+%2B+Google+research+%E2%80%A2+Free&theme=dark&accent=3b82f6">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; border-bottom: 1px solid #334155; z-index: 100; padding: 0 16px; display: flex; align-items: center; height: 52px; overflow-x: auto; }
+        .navbar a { color: #94a3b8; text-decoration: none; font-size: 0.8rem; font-weight: 500; padding: 8px 12px; white-space: nowrap; border-radius: 6px; transition: all 0.2s; }
+        .navbar a:hover, .navbar a.active { color: #3b82f6; background: rgba(59,130,246,0.1); }
+
+        .screen { display: none; min-height: 100vh; padding-top: 52px; }
+        .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 72px 20px 40px; }
+
+        .landing-card { background: #1e293b; border-radius: 16px; padding: 40px 32px; max-width: 520px; width: 100%; text-align: center; }
+        .landing-card .tag { display: inline-block; padding: 4px 12px; background: rgba(59,130,246,0.15); color: #3b82f6; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+        .landing-card h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.2; }
+        .landing-card .sub { font-size: 0.9rem; color: #94a3b8; margin-bottom: 24px; line-height: 1.5; }
+        .dims-grid { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 24px; }
+        .dim-chip { padding: 6px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 20px; font-size: 0.75rem; color: #94a3b8; }
+        .btn-primary { padding: 16px 40px; border-radius: 12px; border: none; background: #3b82f6; color: white; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+        .fine-print { font-size: 0.75rem; color: #475569; margin-top: 16px; }
+
+        /* Quiz */
+        .quiz-screen { padding-top: 52px; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; max-width: 600px; margin: 0 auto; }
+        .section-label { font-size: 0.85rem; color: #3b82f6; font-weight: 600; }
+        .progress-text { font-size: 0.85rem; color: #64748b; }
+        .progress-bar { max-width: 600px; margin: 0 auto; height: 4px; background: #334155; border-radius: 2px; }
+        .progress-fill { height: 100%; background: #3b82f6; border-radius: 2px; transition: width 0.3s; }
+        .question-container { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+        .section-divider { padding: 16px 0 8px; }
+        .section-divider h3 { color: #3b82f6; font-size: 1rem; }
+        .section-divider p { color: #64748b; font-size: 0.8rem; }
+        .q-card { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .q-card .q-text { font-size: 0.9rem; margin-bottom: 10px; line-height: 1.4; }
+        .likert { display: flex; gap: 6px; justify-content: center; }
+        .likert label { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px 4px; border-radius: 8px; transition: all 0.15s; min-width: 48px; }
+        .likert label:hover { background: rgba(59,130,246,0.1); }
+        .likert input { display: none; }
+        .likert .circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #475569; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+        .likert input:checked + .circle { background: #3b82f6; border-color: #3b82f6; }
+        .likert .label-text { font-size: 0.6rem; color: #64748b; text-align: center; }
+        .submit-area { text-align: center; padding: 24px 20px 40px; }
+
+        /* Results */
+        .results-container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .section-card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .section-card h2 { font-size: 1.1rem; margin-bottom: 12px; color: #3b82f6; }
+        .section-card h3 { font-size: 0.95rem; margin-bottom: 8px; color: #e2e8f0; }
+        .archetype-header { text-align: center; padding: 16px 0; }
+        .archetype-emoji { font-size: 3rem; }
+        .archetype-title { font-size: 1.3rem; font-weight: 700; margin: 8px 0; }
+        .archetype-quote { font-style: italic; color: #94a3b8; font-size: 0.9rem; }
+        .dim-bar-container { margin: 8px 0; }
+        .dim-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
+        .dim-label .name { color: #94a3b8; }
+        .dim-label .score { color: #3b82f6; font-weight: 600; }
+        .dim-bar-bg { height: 8px; background: #334155; border-radius: 4px; }
+        .dim-bar { height: 100%; border-radius: 4px; transition: width 0.8s; width: 0; }
+        .strength-item { padding: 8px 0; border-bottom: 1px solid #334155; font-size: 0.85rem; }
+        .strength-item:last-child { border: none; }
+        .ai-narrative { font-size: 0.85rem; color: #94a3b8; line-height: 1.7; white-space: pre-wrap; }
+        .loading { color: #64748b; font-style: italic; }
+        .share-section { text-align: center; margin-top: 8px; }
+        .share-section p { font-size: 0.85rem; color: #64748b; margin-bottom: 8px; }
+        .btn-share { display: inline-block; padding: 12px 28px; background: #3b82f6; color: white; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-share:hover { background: #2563eb; }
+        .btn-retake { display: inline-block; padding: 12px 28px; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 10px; font-size: 0.85rem; cursor: pointer; margin-top: 8px; }
+        .radar-wrap { display: flex; justify-content: center; margin: 12px 0; }
+        .radar-svg { width: 280px; height: 280px; }
+        .radar-svg .grid { fill: none; stroke: #334155; stroke-width: 0.5; }
+        .radar-svg .data-area { fill: rgba(59,130,246,0.2); stroke: #3b82f6; stroke-width: 2; }
+        .radar-svg .dot { fill: #3b82f6; }
+        .radar-svg .label-text { fill: #94a3b8; font-size: 9px; font-family: sans-serif; }
+        .radar-svg .score-text { fill: #3b82f6; font-size: 9px; font-weight: 700; font-family: sans-serif; }
+        .radar-svg .axis { stroke: #334155; stroke-width: 0.5; }
+
+        @media (max-width: 600px) {
+            .landing-card { padding: 28px 20px; }
+            .landing-card h1 { font-size: 1.4rem; }
+            .likert label { min-width: 40px; padding: 6px 2px; }
+            .likert .circle { width: 24px; height: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="active">Home</a>
+    <a href="/assessment">Assessment</a>
+    <a href="/games">Games</a>
+    <a href="/academy">Academy</a>
+</nav>
+
+<!-- LANDING -->
+<div class="screen active" id="landingScreen">
+    <div class="landing-card">
+        <div class="tag">Research-backed</div>
+        <h1>What Kind of Manager Are You?</h1>
+        <div class="sub">5-minute assessment based on Google's Project Aristotle, Harvard leadership research, and McKinsey's organizational health framework. Discover your management style across 6 dimensions.</div>
+        <div class="dims-grid">
+            <span class="dim-chip">People Builder</span>
+            <span class="dim-chip">Process Architect</span>
+            <span class="dim-chip">Strategic Thinker</span>
+            <span class="dim-chip">Change Driver</span>
+            <span class="dim-chip">Culture Keeper</span>
+            <span class="dim-chip">Results Driver</span>
+        </div>
+        <button class="btn-primary" onclick="startQuiz()">Start Assessment</button>
+        <p class="fine-print">No registration. Instant results. Used by Fortune 500 L&D teams.</p>
+    </div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen quiz-screen" id="quizScreen">
+    <div class="quiz-header">
+        <span class="section-label" id="sectionLabel">People Builder</span>
+        <span class="progress-text" id="progressText">0/24</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="question-container" id="questionContainer"></div>
+    <div class="submit-area" id="submitArea" style="display:none;">
+        <button class="btn-primary" onclick="submitQuiz()">See My Results</button>
+    </div>
+</div>
+
+<!-- RESULTS -->
+<div class="screen" id="resultsScreen">
+    <div class="results-container" id="resultsContainer"></div>
+</div>
+
+<script>
+// ============================================================
+// ARCHETYPES & QUESTIONS
+// ============================================================
+
+var ARCHETYPES = {
+    PeopleBuilder: { name: 'People Builder', emoji: '&#129309;', color: '#22c55e', quote: 'A leader is best when people barely know he exists. When his work is done, they will say: we did it ourselves.', desc: 'You develop talent. Coaching, delegation, and growing people is your superpower.' },
+    ProcessArchitect: { name: 'Process Architect', emoji: '&#9881;', color: '#60a5fa', quote: 'Every system is perfectly designed to get the results it gets.', desc: 'You build systems that scale. SOPs, workflows, and operational excellence define your approach.' },
+    StrategicThinker: { name: 'Strategic Thinker', emoji: '&#9813;', color: '#a78bfa', quote: 'Strategy is about making choices. It is about deliberately choosing to be different.', desc: 'You see the big picture. Resource allocation, long-term planning, and strategic alignment are your strengths.' },
+    ChangeDriver: { name: 'Change Driver', emoji: '&#9889;', color: '#f59e0b', quote: 'The measure of intelligence is the ability to change.', desc: 'You drive transformation. Adaptability, innovation adoption, and leading through uncertainty define you.' },
+    CultureKeeper: { name: 'Culture Keeper', emoji: '&#127793;', color: '#ec4899', quote: 'Culture eats strategy for breakfast.', desc: 'You create psychological safety. Trust, inclusion, and team dynamics are your foundation.' },
+    ResultsDriver: { name: 'Results Driver', emoji: '&#127919;', color: '#ef4444', quote: 'What gets measured gets managed.', desc: 'You deliver outcomes. Accountability, KPIs, and execution excellence are your trademarks.' }
+};
+
+var DIM_COLORS = { PeopleBuilder: '#22c55e', ProcessArchitect: '#60a5fa', StrategicThinker: '#a78bfa', ChangeDriver: '#f59e0b', CultureKeeper: '#ec4899', ResultsDriver: '#ef4444' };
+
+var FAMOUS = {
+    'Satya Nadella': { PeopleBuilder: 85, ProcessArchitect: 60, StrategicThinker: 90, ChangeDriver: 95, CultureKeeper: 90, ResultsDriver: 75 },
+    'Tim Cook': { PeopleBuilder: 65, ProcessArchitect: 95, StrategicThinker: 80, ChangeDriver: 50, CultureKeeper: 60, ResultsDriver: 90 },
+    'Indra Nooyi': { PeopleBuilder: 80, ProcessArchitect: 70, StrategicThinker: 95, ChangeDriver: 75, CultureKeeper: 85, ResultsDriver: 80 },
+    'Andy Grove': { PeopleBuilder: 55, ProcessArchitect: 85, StrategicThinker: 80, ChangeDriver: 90, CultureKeeper: 40, ResultsDriver: 95 },
+    'Mary Barra': { PeopleBuilder: 75, ProcessArchitect: 80, StrategicThinker: 85, ChangeDriver: 90, CultureKeeper: 70, ResultsDriver: 85 },
+    'Ed Catmull': { PeopleBuilder: 90, ProcessArchitect: 75, StrategicThinker: 70, ChangeDriver: 65, CultureKeeper: 95, ResultsDriver: 60 },
+};
+
+var CO_NEED = {
+    PeopleBuilder: { need: 'ResultsDriver', reason: 'You grow people beautifully but need someone who drives hard deadlines and accountability.' },
+    ProcessArchitect: { need: 'ChangeDriver', reason: 'Your systems are excellent but need someone who challenges the status quo and drives innovation.' },
+    StrategicThinker: { need: 'ProcessArchitect', reason: 'Your vision is clear but you need someone to build the operational machinery to execute it.' },
+    ChangeDriver: { need: 'CultureKeeper', reason: 'You drive change fast but need someone who ensures people feel safe during transitions.' },
+    CultureKeeper: { need: 'ResultsDriver', reason: 'Your team loves working for you but you need someone who pushes for measurable outcomes.' },
+    ResultsDriver: { need: 'PeopleBuilder', reason: 'You hit every target but need someone who develops people so they grow, not just perform.' }
+};
+
+var sections = [
+    { name: 'People Builder', dim: 'PeopleBuilder', emoji: '&#129309;', items: [
+        { text: 'I regularly give specific, actionable feedback to my team members.' },
+        { text: 'I delegate tasks based on each person\'s growth needs, not just efficiency.' },
+        { text: 'I spend time coaching individuals on their career development.' },
+        { text: 'I can identify each team member\'s top 3 strengths and growth areas.' },
+    ]},
+    { name: 'Process Architect', dim: 'ProcessArchitect', emoji: '&#9881;', items: [
+        { text: 'I document processes so they work even when I\'m not there.' },
+        { text: 'When something goes wrong, I fix the system, not just the symptom.' },
+        { text: 'I regularly audit our workflows for inefficiencies.' },
+        { text: 'My team has clear SOPs for recurring tasks.' },
+    ]},
+    { name: 'Strategic Thinker', dim: 'StrategicThinker', emoji: '&#9813;', items: [
+        { text: 'I can clearly articulate how my team\'s work connects to company goals.' },
+        { text: 'I proactively reallocate resources when priorities shift.' },
+        { text: 'I anticipate problems 2-3 months before they become urgent.' },
+        { text: 'I say no to good opportunities to focus on great ones.' },
+    ]},
+    { name: 'Change Driver', dim: 'ChangeDriver', emoji: '&#9889;', items: [
+        { text: 'I actively seek new methods and tools to improve how we work.' },
+        { text: 'When a major change is needed, I lead from the front, not behind.' },
+        { text: 'I\'m comfortable making decisions with incomplete information.' },
+        { text: 'I help my team adapt quickly when plans change unexpectedly.' },
+    ]},
+    { name: 'Culture Keeper', dim: 'CultureKeeper', emoji: '&#127793;', items: [
+        { text: 'My team members feel safe admitting mistakes without fear.' },
+        { text: 'I actively address toxic behavior even when the person is a top performer.' },
+        { text: 'I create space for different perspectives and healthy disagreement.' },
+        { text: 'New team members feel welcomed and integrated within their first week.' },
+    ]},
+    { name: 'Results Driver', dim: 'ResultsDriver', emoji: '&#127919;', items: [
+        { text: 'I set clear, measurable goals with specific deadlines for my team.' },
+        { text: 'I hold people accountable when they miss commitments.' },
+        { text: 'I track key metrics weekly and act on negative trends immediately.' },
+        { text: 'I prioritize ruthlessly -- my team always knows the top 3 priorities.' },
+    ]},
+];
+
+var allItems = [];
+sections.forEach(function(s) { s.items.forEach(function(item) { allItems.push({ text: item.text, dim: s.dim }); }); });
+
+// ============================================================
+// STATE
+// ============================================================
+var userEmail = '';
+var answers = {};
+var globalScores = {};
+
+// ============================================================
+// FLOW
+// ============================================================
+
+function startQuiz() {
+    userEmail = 'anonymous_' + Date.now();
+    document.getElementById('landingScreen').classList.remove('active');
+    document.getElementById('quizScreen').classList.add('active');
+    document.getElementById('quizScreen').style.display = 'block';
+    renderQuestions();
+}
+
+function renderQuestions() {
+    var container = document.getElementById('questionContainer');
+    var html = '';
+    var globalIdx = 0;
+    sections.forEach(function(section) {
+        html += '<div class="section-divider"><h3>' + section.emoji + ' ' + section.name + '</h3></div>';
+        section.items.forEach(function(item) {
+            html += '<div class="q-card"><div class="q-text">' + item.text + '</div><div class="likert">';
+            var labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+            for (var v = 1; v <= 5; v++) {
+                html += '<label><input type="radio" name="q' + globalIdx + '" value="' + v + '" onchange="recordAnswer(' + globalIdx + ',' + v + ')"><span class="circle"></span><span class="label-text">' + labels[v-1] + '</span></label>';
+            }
+            html += '</div></div>';
+            globalIdx++;
+        });
+    });
+    container.innerHTML = html;
+}
+
+function recordAnswer(idx, val) {
+    answers[idx] = val;
+    var total = allItems.length;
+    var answered = Object.keys(answers).length;
+    document.getElementById('progressText').textContent = answered + '/' + total;
+    document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
+
+    var sectionIdx = Math.floor(idx / 4);
+    if (sectionIdx < sections.length) {
+        document.getElementById('sectionLabel').textContent = sections[sectionIdx].name;
+    }
+
+    if (answered >= total) {
+        document.getElementById('submitArea').style.display = 'block';
+    }
+}
+
+function scoreSection(dim) {
+    var sum = 0, count = 0;
+    var globalIdx = 0;
+    sections.forEach(function(s) {
+        s.items.forEach(function(item) {
+            if (s.dim === dim && answers[globalIdx]) { sum += answers[globalIdx]; count++; }
+            globalIdx++;
+        });
+    });
+    return count > 0 ? Math.round((sum / (count * 5)) * 100) : 0;
+}
+
+async function submitQuiz() {
+    if (Object.keys(answers).length < allItems.length) {
+        alert('Please answer all questions before continuing.');
+        return;
+    }
+
+    var scores = {};
+    sections.forEach(function(s) { scores[s.dim] = scoreSection(s.dim); });
+    globalScores = scores;
+
+    var sorted = Object.entries(scores).sort(function(a, b) { return b[1] - a[1]; });
+    var primary = sorted[0][0];
+    var secondary = sorted[1][0];
+    var weakest = sorted[sorted.length - 1][0];
+
+    // Find famous match
+    var bestMatch = '', bestDist = Infinity;
+    for (var name in FAMOUS) {
+        var dist = 0;
+        for (var d in scores) { dist += Math.pow((scores[d] || 0) - (FAMOUS[name][d] || 0), 2); }
+        if (dist < bestDist) { bestDist = dist; bestMatch = name; }
+    }
+
+    // Save
+    var payload = { email: userEmail, scores: scores, primary_type: primary, famous_match: bestMatch, timestamp: new Date().toISOString() };
+    try { await fetch('/api/manager-profile', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); } catch(e) {}
+
+    showResults(scores, sorted, primary, secondary, weakest, bestMatch);
+}
+
+function showResults(scores, sorted, primary, secondary, weakest, famousMatch) {
+    document.getElementById('quizScreen').classList.remove('active');
+    document.getElementById('quizScreen').style.display = 'none';
+    var rs = document.getElementById('resultsScreen');
+    rs.classList.add('active');
+    rs.style.display = 'flex';
+
+    var pData = ARCHETYPES[primary];
+    var radarSVG = buildRadar(scores);
+
+    var dimBarsHTML = '';
+    sorted.forEach(function(entry) {
+        var d = entry[0], pct = entry[1];
+        dimBarsHTML += '<div class="dim-bar-container"><div class="dim-label"><span class="name">' + ARCHETYPES[d].name + '</span><span class="score">' + pct + '%</span></div>' +
+            '<div class="dim-bar-bg"><div class="dim-bar" data-score="' + pct + '" style="background:' + DIM_COLORS[d] + ';"></div></div></div>';
+    });
+
+    var top2 = sorted.slice(0, 2).map(function(e) { return ARCHETYPES[e[0]].name; });
+    var bottom2 = sorted.slice(-2).map(function(e) { return ARCHETYPES[e[0]].name; });
+    var strengthsHTML = '<div class="strength-item"><strong>Top strengths:</strong> ' + top2.join(', ') + '</div>';
+    var growthHTML = '<div class="strength-item"><strong>Growth areas:</strong> ' + bottom2.join(', ') + '</div>';
+
+    var coNeed = CO_NEED[primary];
+    var shareText = "I'm a " + pData.name + " manager like " + famousMatch + "! What kind of manager are you? ";
+
+    var container = document.getElementById('resultsContainer');
+    container.innerHTML =
+        '<div class="section-card"><div class="archetype-header">' +
+            '<div class="archetype-emoji">' + pData.emoji + '</div>' +
+            '<div class="archetype-title" style="color:' + pData.color + '">' + pData.name + '</div>' +
+            '<div class="archetype-quote">"' + pData.quote + '"</div>' +
+            '<p style="margin-top:12px;font-size:0.9rem;color:#94a3b8;">' + pData.desc + '</p>' +
+        '</div></div>' +
+
+        '<div class="section-card"><h2>Your Management Profile</h2>' +
+            '<div class="radar-wrap">' + radarSVG + '</div>' + dimBarsHTML + '</div>' +
+
+        '<div class="section-card"><h3>Famous Match: ' + famousMatch + '</h3>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;">Based on your scores, you share the most similar management DNA with <strong>' + famousMatch + '</strong>.</p></div>' +
+
+        '<div class="section-card">' + strengthsHTML + growthHTML + '</div>' +
+
+        '<div class="section-card"><h3>Your Ideal Co-Manager</h3>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;">You need a <strong>' + ARCHETYPES[coNeed.need].name + '</strong>. ' + coNeed.reason + '</p></div>' +
+
+        '<div class="section-card ai-section"><h2>AI Analysis</h2>' +
+            '<div class="ai-narrative" id="aiNarrative"><p class="loading">Generating your personalized analysis...</p></div></div>' +
+
+        '<div class="section-card"><h2>AI Leadership Coach</h2>' +
+            '<div style="display:flex;gap:8px;"><input type="text" id="coachQuestion" placeholder="Ask about leadership, teams, delegation..." style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;outline:none;">' +
+            '<button onclick="askCoach()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Ask</button></div>' +
+            '<div id="coachResponse" style="margin-top:12px;font-size:0.85rem;color:#94a3b8;line-height:1.6;"></div></div>' +
+
+        '<div class="section-card"><div class="share-section">' +
+            '<p>Share your management profile</p>' +
+            '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">' +
+                '<a href="https://wa.me/?text=' + encodeURIComponent(shareText + window.location.origin) + '" target="_blank" style="padding:10px 20px;background:#25D366;color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;">WhatsApp</a>' +
+                '<button class="btn-share" id="shareBtn">Copy link</button>' +
+            '</div><button class="btn-retake" onclick="window.location.reload()">Retake Assessment</button></div></div>' +
+
+        '<div class="section-card"><div style="text-align:center;">' +
+            '<p style="font-size:1rem;font-weight:600;margin-bottom:4px;">Save your results</p>' +
+            '<p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">Get your full leadership report with growth plan</p>' +
+            '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
+                '<input type="email" id="postEmail" placeholder="you@email.com" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;">' +
+                '<button onclick="saveEmailPost()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Save</button></div>' +
+            '<div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>' +
+
+        '<div class="section-card" style="text-align:center;">' +
+            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:8px;">Want to discover more through gameplay?</p>' +
+            '<a href="/games" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">Play the Manager Games</a>' +
+            '<br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">Start the Academy</a></div>';
+
+    // Animate bars
+    setTimeout(function() { document.querySelectorAll('.dim-bar').forEach(function(bar) { bar.style.width = bar.dataset.score + '%'; }); }, 300);
+
+    // Share button
+    document.getElementById('shareBtn').addEventListener('click', function() {
+        navigator.clipboard.writeText(shareText + window.location.origin).then(function() {
+            var btn = document.getElementById('shareBtn'); btn.textContent = 'Copied!';
+            setTimeout(function() { btn.textContent = 'Copy link'; }, 2000);
+        });
+    });
+
+    // AI narrative
+    fetch('/api/ai/narrative', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: scores}) })
+        .then(function(r) { return r.json(); })
+        .then(function(d) { document.getElementById('aiNarrative').innerHTML = '<p>' + (d.narrative || 'AI unavailable.').replace(/\n/g, '</p><p>') + '</p>'; })
+        .catch(function() { document.getElementById('aiNarrative').innerHTML = '<p>AI analysis unavailable.</p>'; });
+}
+
+async function askCoach() {
+    var q = document.getElementById('coachQuestion').value.trim();
+    if (!q) return;
+    document.getElementById('coachResponse').innerHTML = '<em>Thinking...</em>';
+    try {
+        var r = await fetch('/api/ai/coach', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: globalScores, question: q}) });
+        var d = await r.json();
+        document.getElementById('coachResponse').textContent = d.answer || 'No response.';
+    } catch(e) { document.getElementById('coachResponse').textContent = 'Coach unavailable.'; }
+}
+
+async function saveEmailPost() {
+    var email = document.getElementById('postEmail').value.trim().toLowerCase();
+    if (!email || !email.includes('@')) { alert('Please enter a valid email'); return; }
+    userEmail = email;
+    try { await fetch('/api/manager-profile', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email: email, scores: globalScores, timestamp: new Date().toISOString()}) }); } catch(e) {}
+    document.getElementById('saveMsg').textContent = 'Results saved!';
+    document.getElementById('saveMsg').style.display = 'block';
+    document.getElementById('postEmail').disabled = true;
+}
+
+function buildRadar(scores) {
+    var dims = Object.keys(ARCHETYPES);
+    var n = dims.length;
+    var cx = 140, cy = 140, r = 100;
+    var startAngle = -Math.PI / 2;
+    var angleStep = (2 * Math.PI) / n;
+
+    function pol(angle, radius) { return { x: cx + radius * Math.cos(angle), y: cy + radius * Math.sin(angle) }; }
+
+    var gridHTML = '', axesHTML = '', colors = DIM_COLORS;
+    for (var ring = 1; ring <= 4; ring++) {
+        var rr = r * ring / 4, pts = [];
+        for (var i = 0; i < n; i++) { var p = pol(startAngle + i * angleStep, rr); pts.push(p.x + ',' + p.y); }
+        gridHTML += '<polygon class="grid" points="' + pts.join(' ') + '"/>';
+    }
+    for (var i = 0; i < n; i++) {
+        var p = pol(startAngle + i * angleStep, r);
+        axesHTML += '<line class="axis" x1="' + cx + '" y1="' + cy + '" x2="' + p.x + '" y2="' + p.y + '"/>';
+    }
+
+    var dataPts = [], dotsHTML = '';
+    dims.forEach(function(d, i) {
+        var angle = startAngle + i * angleStep;
+        var val = (scores[d] || 0) / 100 * r;
+        var p = pol(angle, val);
+        dataPts.push(p.x + ',' + p.y);
+        dotsHTML += '<circle class="dot" cx="' + p.x + '" cy="' + p.y + '" r="3"/>';
+    });
+    var dataHTML = '<polygon class="data-area" points="' + dataPts.join(' ') + '"/>';
+
+    var labelsHTML = '';
+    dims.forEach(function(d, i) {
+        var angle = startAngle + i * angleStep;
+        var p = pol(angle, r + 25);
+        var anchor = 'middle';
+        if (p.x < cx - 10) anchor = 'end';
+        else if (p.x > cx + 10) anchor = 'start';
+        var shortName = ARCHETYPES[d].name.split(' ')[0];
+        labelsHTML += '<text x="' + p.x + '" y="' + p.y + '" text-anchor="' + anchor + '" dominant-baseline="central" class="label-text" fill="' + colors[d] + '">' + shortName + '</text>';
+        labelsHTML += '<text x="' + p.x + '" y="' + (p.y + 13) + '" text-anchor="' + anchor + '" dominant-baseline="central" class="score-text">' + scores[d] + '%</text>';
+    });
+
+    return '<svg class="radar-svg" viewBox="0 0 280 280">' + gridHTML + axesHTML + dataHTML + dotsHTML + labelsHTML + '</svg>';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var params = new URLSearchParams(window.location.search);
+    var prefill = params.get('email');
+    if (prefill) userEmail = prefill;
+});
+</script>
+</body>
+</html>

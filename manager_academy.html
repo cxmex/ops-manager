@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Academy | Leadership Training</title>
+    <meta property="og:title" content="Manager Academy - Learn to Lead Teams">
+    <meta property="og:description" content="Leadership courses based on Harvard, Google, and McKinsey research. Mastery-gated quizzes. Free.">
+    <meta property="og:image" content="https://ogforge.dev/api/v1?title=Manager+Academy&subtitle=Leadership+training+based+on+research&theme=dark&accent=3b82f6">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+
+        .navbar { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; border-bottom: 1px solid #334155; z-index: 100; padding: 0 16px; display: flex; align-items: center; height: 52px; }
+        .navbar a { color: #94a3b8; text-decoration: none; font-size: 0.8rem; font-weight: 500; padding: 8px 12px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+        .navbar a:hover, .navbar a.active { color: #3b82f6; background: rgba(167,139,250,0.1); }
+
+        .main { margin-top: 52px; display: flex; min-height: calc(100vh - 52px); }
+
+        /* Sidebar */
+        .sidebar { width: 280px; background: #1e293b; border-right: 1px solid #334155; overflow-y: auto; flex-shrink: 0; padding: 16px 0; }
+        .sidebar h3 { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px; }
+        .module-header { padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: #3b82f6; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .module-header:hover { background: rgba(167,139,250,0.1); }
+        .module-header .arrow { transition: transform 0.2s; font-size: 0.7rem; }
+        .module-header .arrow.open { transform: rotate(90deg); }
+        .lesson-list { display: none; }
+        .lesson-list.open { display: block; }
+        .lesson-item { padding: 8px 16px 8px 36px; font-size: 0.8rem; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.15s; }
+        .lesson-item:hover { background: rgba(167,139,250,0.05); color: #e2e8f0; }
+        .lesson-item.active { color: #3b82f6; background: rgba(167,139,250,0.1); }
+        .lesson-item.completed { color: #22c55e; }
+        .lesson-item .icon { width: 16px; text-align: center; font-size: 0.7rem; }
+        .progress-mini { width: 100%; height: 3px; background: #334155; border-radius: 2px; margin: 4px 16px 12px; }
+        .progress-mini .fill { height: 100%; background: #3b82f6; border-radius: 2px; transition: width 0.3s; }
+
+        /* Content */
+        .content { flex: 1; overflow-y: auto; padding: 32px; max-width: 800px; }
+        .content h1 { font-size: 1.5rem; color: #3b82f6; margin-bottom: 8px; }
+        .content h2 { font-size: 1.2rem; color: #e2e8f0; margin: 24px 0 12px; }
+        .content p { font-size: 0.95rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 12px; }
+        .content ul, .content ol { margin: 8px 0 16px 24px; }
+        .content li { margin-bottom: 6px; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5; }
+        .content blockquote { border-left: 3px solid #a78bfa; padding: 12px 16px; background: rgba(167,139,250,0.05); border-radius: 0 8px 8px 0; margin: 16px 0; font-style: italic; color: #94a3b8; }
+        .key-concept { background: #1e293b; border-radius: 10px; padding: 16px; margin: 16px 0; border: 1px solid #334155; }
+        .key-concept h3 { color: #3b82f6; font-size: 0.9rem; margin-bottom: 8px; }
+        .video-placeholder { background: #0f172a; border: 2px dashed #334155; border-radius: 12px; padding: 40px; text-align: center; margin: 16px 0; }
+        .video-placeholder .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .video-placeholder p { color: #64748b; font-size: 0.85rem; }
+
+        /* Quiz */
+        .quiz-section { background: #1e293b; border-radius: 12px; padding: 24px; margin-top: 32px; border: 1px solid #334155; }
+        .quiz-section h3 { color: #fbbf24; font-size: 1rem; margin-bottom: 4px; }
+        .quiz-section .subtitle { color: #64748b; font-size: 0.8rem; margin-bottom: 16px; }
+        .quiz-q { margin-bottom: 20px; }
+        .quiz-q .question { font-size: 0.9rem; color: #e2e8f0; margin-bottom: 8px; font-weight: 500; }
+        .quiz-q .options { display: flex; flex-direction: column; gap: 6px; }
+        .quiz-q .option { padding: 10px 14px; background: #0f172a; border: 2px solid #334155; border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: #94a3b8; transition: all 0.15s; }
+        .quiz-q .option:hover { border-color: #3b82f6; color: #e2e8f0; }
+        .quiz-q .option.selected { border-color: #3b82f6; background: rgba(167,139,250,0.1); color: #e2e8f0; }
+        .quiz-q .option.correct { border-color: #22c55e; background: rgba(34,197,94,0.1); color: #22c55e; }
+        .quiz-q .option.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); color: #ef4444; }
+        .quiz-q .explanation { display: none; margin-top: 8px; font-size: 0.8rem; color: #94a3b8; padding: 8px 12px; background: rgba(34,197,94,0.05); border-radius: 6px; }
+        .btn-quiz { padding: 12px 28px; background: #3b82f6; color: #0f172a; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
+        .btn-quiz:hover { background: #8b5cf6; }
+        .btn-quiz:disabled { background: #475569; cursor: not-allowed; }
+        .quiz-result { text-align: center; padding: 20px; margin-top: 16px; border-radius: 10px; }
+        .quiz-result.pass { background: rgba(34,197,94,0.1); border: 1px solid #22c55e; }
+        .quiz-result.fail { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; }
+        .quiz-result h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .quiz-result p { font-size: 0.85rem; }
+
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 24px; padding-top: 16px; border-top: 1px solid #334155; }
+        .btn-nav { padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; }
+        .btn-prev { background: #334155; color: #e2e8f0; }
+        .btn-next { background: #3b82f6; color: #0f172a; }
+        .btn-next:disabled { background: #475569; cursor: not-allowed; }
+        .btn-next.locked::after { content: ' (pass quiz to unlock)'; font-weight: 400; font-size: 0.75rem; }
+
+        /* Mobile */
+        .menu-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: #3b82f6; color: #0f172a; border: none; font-size: 1.5rem; cursor: pointer; z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        @media (max-width: 768px) {
+            .sidebar { position: fixed; left: -300px; top: 52px; bottom: 0; z-index: 150; transition: left 0.3s; }
+            .sidebar.open { left: 0; }
+            .menu-toggle { display: block; }
+            .content { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/">Home</a>
+    <a href="/assessment">Assessment</a>
+    <a href="/games">Games</a>
+    <a href="/academy" class="active">Academy</a>
+</nav>
+
+<div class="main">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="content" id="content">
+        <div id="welcomeScreen">
+            <h1>Manager Academy</h1>
+            <p>Leadership training based on Harvard, Google, and McKinsey research. Each lesson is 5-7 minutes with a mastery quiz. Score 80% to advance.</p>
+            <p>Select a lesson from the sidebar to begin.</p>
+        </div>
+    </main>
+</div>
+
+<button class="menu-toggle" id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#9776;</button>
+
+<script>
+// ============================================================
+// COURSE DATA
+// ============================================================
+var COURSE = {
+    modules: [
+        {
+            id: 'm1',
+            title: 'Psychological Safety',
+            desc: 'Based on Google Project Aristotle + Amy Edmondson (Harvard)',
+            lessons: [
+                {
+                    id: 'l1_1', title: 'What Google Discovered About Great Teams',
+                    content: '<h2>What Google Discovered About Great Teams</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon. Read the lesson below.</p></div>' +
+                        '<p>In 2012, Google launched <strong>Project Aristotle</strong> -- a massive study of 180+ teams to find what makes some teams great and others mediocre.</p>' +
+                        '<p>They expected to find that the best teams had the smartest people, or the best mix of skills. <strong>They were wrong.</strong></p>' +
+                        '<div class="key-concept"><h3>The #1 Factor: Psychological Safety</h3>' +
+                        '<p>The most important factor was not WHO was on the team, but HOW they worked together. Specifically: <strong>do team members feel safe taking risks, asking questions, and admitting mistakes?</strong></p>' +
+                        '<p>Teams with high psychological safety were:</p><ul>' +
+                        '<li>More likely to harness diverse ideas</li><li>More likely to stay at Google</li><li>Rated as 2x more effective by executives</li><li>Brought in more revenue</li></ul></div>' +
+                        '<blockquote>"Psychological safety is the belief that you won\'t be punished or humiliated for speaking up with ideas, questions, concerns, or mistakes." -- Amy Edmondson, Harvard</blockquote>' +
+                        '<h2>The 5 Factors (In Order of Importance)</h2>' +
+                        '<ol><li><strong>Psychological Safety:</strong> Can I take risks without feeling insecure?</li>' +
+                        '<li><strong>Dependability:</strong> Can I count on my teammates?</li>' +
+                        '<li><strong>Structure & Clarity:</strong> Are goals and roles clear?</li>' +
+                        '<li><strong>Meaning:</strong> Is this work personally important to me?</li>' +
+                        '<li><strong>Impact:</strong> Does our work matter?</li></ol>',
+                    quiz: [
+                        { q: 'According to Google\'s Project Aristotle, what is the #1 factor that makes teams effective?', options: ['Having the smartest people', 'Psychological safety', 'Clear goals', 'Strong leadership'], correct: 1, explanation: 'Psychological safety -- feeling safe to take risks and be vulnerable -- was the single most important factor, above all others.' },
+                        { q: 'How many teams did Google study in Project Aristotle?', options: ['50', '100', '180+', '500+'], correct: 2, explanation: 'Google studied over 180 teams across the company to identify patterns in high-performing vs low-performing teams.' },
+                        { q: 'Teams with high psychological safety were rated as how much more effective by executives?', options: ['50% more', '2x more', '3x more', '10x more'], correct: 1, explanation: 'Executives rated psychologically safe teams as 2x more effective, and these teams also brought in more revenue.' },
+                    ]
+                },
+                {
+                    id: 'l1_2', title: 'How to Build Psychological Safety',
+                    content: '<h2>How to Build Psychological Safety as a Manager</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
+                        '<p>Psychological safety doesn\'t mean being nice. It means creating an environment where people can be <strong>candid</strong> -- where disagreement, questions, and mistakes are treated as learning, not threats.</p>' +
+                        '<div class="key-concept"><h3>7 Actions That Build Safety</h3><ol>' +
+                        '<li><strong>Frame work as learning, not execution.</strong> "We\'re experimenting" vs "We need to get this right."</li>' +
+                        '<li><strong>Acknowledge your own fallibility.</strong> "I may be wrong about this. What am I missing?"</li>' +
+                        '<li><strong>Model curiosity.</strong> Ask genuine questions, don\'t just give answers.</li>' +
+                        '<li><strong>Respond productively to bad news.</strong> "Thanks for flagging that. How do we fix it?" NOT "How did you let this happen?"</li>' +
+                        '<li><strong>Normalize failure stories.</strong> Share your own mistakes openly.</li>' +
+                        '<li><strong>Invite input explicitly.</strong> "Sarah, you\'ve been quiet. What\'s your take?"</li>' +
+                        '<li><strong>Sanction clear violations.</strong> If someone ridicules a question, address it immediately.</li></ol></div>' +
+                        '<blockquote>"The leader\'s job is to create the conditions where people can do their best work. That starts with safety." -- Ed Catmull, Pixar</blockquote>',
+                    quiz: [
+                        { q: 'A team member brings you bad news about a project delay. The best response is:', options: ['"How did you let this happen?"', '"Thanks for flagging that. How do we fix it?"', '"Let\'s discuss this in the team meeting"', '"I\'ll handle it myself"'], correct: 1, explanation: 'Responding productively to bad news encourages people to surface problems early. Blaming them ensures they hide problems next time.' },
+                        { q: 'Psychological safety means:', options: ['Everyone is nice to each other', 'There are no disagreements', 'People feel safe being candid and vulnerable', 'The manager protects everyone from criticism'], correct: 2, explanation: 'It\'s not about being nice -- it\'s about candor. People should feel safe to disagree, ask questions, and admit mistakes without fear.' },
+                        { q: 'Which action does NOT build psychological safety?', options: ['Sharing your own mistakes', 'Asking "What am I missing?"', 'Publicly criticizing someone who made an error', 'Explicitly inviting quiet team members to speak'], correct: 2, explanation: 'Public criticism destroys safety. Everyone watching learns: "If I make a mistake, I\'ll be humiliated too." Address issues privately.' },
+                    ]
+                },
+                {
+                    id: 'l1_3', title: 'The 5 Dysfunctions of a Team',
+                    content: '<h2>Lencioni\'s 5 Dysfunctions of a Team</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon.</p></div>' +
+                        '<p>Patrick Lencioni\'s framework is a pyramid. <strong>You can\'t fix the top without fixing the bottom first.</strong></p>' +
+                        '<div class="key-concept"><h3>The Pyramid (Bottom to Top)</h3><ol>' +
+                        '<li><strong>Absence of Trust:</strong> People hide weaknesses and mistakes. They won\'t be vulnerable. (Fix: personal histories exercise, vulnerability-based trust)</li>' +
+                        '<li><strong>Fear of Conflict:</strong> Artificial harmony. People agree in meetings but disagree in hallways. (Fix: mine for conflict, demand debate)</li>' +
+                        '<li><strong>Lack of Commitment:</strong> Without real debate, there\'s no buy-in. People leave meetings ambiguous. (Fix: cascade communication, deadlines)</li>' +
+                        '<li><strong>Avoidance of Accountability:</strong> People don\'t call out peers on behaviors. Only the manager holds people accountable. (Fix: peer accountability, public goals)</li>' +
+                        '<li><strong>Inattention to Results:</strong> People prioritize ego, career, or department over team results. (Fix: public scoreboard, team-based rewards)</li></ol></div>' +
+                        '<h2>How to Diagnose Your Team</h2>' +
+                        '<p>If your team avoids hard conversations, starts at #2. If they have hard conversations but don\'t follow through, it\'s #3 or #4. If they execute but don\'t win, it\'s #5.</p>',
+                    quiz: [
+                        { q: 'What is the foundation of Lencioni\'s pyramid (the first dysfunction to fix)?', options: ['Fear of Conflict', 'Absence of Trust', 'Lack of Commitment', 'Avoidance of Accountability'], correct: 1, explanation: 'Trust is the foundation. Without vulnerability-based trust, teams can\'t have honest conflict, which means no real commitment.' },
+                        { q: 'Your team agrees on everything in meetings but nothing changes afterward. Which dysfunction is this?', options: ['Absence of Trust', 'Fear of Conflict', 'Lack of Commitment', 'Inattention to Results'], correct: 1, explanation: 'Artificial harmony. People avoid real debate, so decisions are superficial. Without genuine conflict, there\'s no buy-in.' },
+                        { q: 'Only the manager holds people accountable -- peers never call each other out. This is:', options: ['Normal management', 'Avoidance of Accountability', 'Good delegation', 'Fear of Conflict'], correct: 1, explanation: 'Peer accountability is stronger than manager accountability. If only you hold people accountable, the team hasn\'t built enough trust for honest feedback.' },
+                    ]
+                },
+            ]
+        },
+        {
+            id: 'm2',
+            title: 'Effective Delegation',
+            desc: 'Based on High Output Management by Andy Grove (Intel)',
+            lessons: [
+                {
+                    id: 'l2_1', title: 'Why Most Managers Fail at Delegation',
+                    content: '<h2>Why Most Managers Fail at Delegation</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
+                        '<p>70% of first-time managers either delegate too little (doing everything themselves) or delegate too much (dumping without context). Both fail.</p>' +
+                        '<div class="key-concept"><h3>Andy Grove\'s Delegation Framework</h3>' +
+                        '<p>Your output as a manager = the output of your team + the output of teams you influence. You don\'t produce -- you <strong>multiply</strong>.</p>' +
+                        '<p>This means your most valuable activity is <strong>leveraged work</strong> -- things that increase your team\'s output by more than the time you invest.</p>' +
+                        '<ul><li><strong>High leverage:</strong> Training, 1-on-1s, setting clear goals, removing blockers</li>' +
+                        '<li><strong>Low leverage:</strong> Doing the work yourself, attending meetings that don\'t need you, reviewing work you could delegate</li></ul></div>' +
+                        '<blockquote>"A manager\'s output = the output of their organization + the output of neighboring organizations under their influence." -- Andy Grove</blockquote>' +
+                        '<h2>The Delegation Spectrum</h2>' +
+                        '<ul><li><strong>Tell:</strong> "Do X by Friday." (New employees, urgent tasks)</li>' +
+                        '<li><strong>Sell:</strong> "Here\'s why X matters. Can you own it?" (Growing employees)</li>' +
+                        '<li><strong>Participate:</strong> "Let\'s figure out the approach together." (Complex tasks)</li>' +
+                        '<li><strong>Delegate:</strong> "You own this. Update me weekly." (Senior/trusted employees)</li></ul>',
+                    quiz: [
+                        { q: 'According to Andy Grove, a manager\'s output is:', options: ['Their individual work product', 'The number of decisions they make', 'The output of their team + teams they influence', 'Their direct reports\' satisfaction score'], correct: 2, explanation: 'Managers don\'t produce -- they multiply. Your value is measured by what your team achieves, not what you do individually.' },
+                        { q: 'Which is a HIGH leverage activity for a manager?', options: ['Writing code that a team member could write', 'Training a team member on a new skill', 'Attending a status meeting', 'Reviewing every PR personally'], correct: 1, explanation: 'Training is high leverage because the time you invest multiplies the team member\'s output for months/years. Doing work they could do is low leverage.' },
+                        { q: 'A new employee needs to complete a task they\'ve never done before. Which delegation level?', options: ['Tell (do X by Friday)', 'Sell (here\'s why it matters)', 'Participate (let\'s figure it out together)', 'Delegate (you own it)'], correct: 2, explanation: 'New employees on unfamiliar tasks need the Participate level -- work together so they learn the approach while still getting the outcome.' },
+                    ]
+                },
+                {
+                    id: 'l2_2', title: 'The Art of the 1-on-1',
+                    content: '<h2>The Art of the 1-on-1</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon.</p></div>' +
+                        '<p>The 1-on-1 is the manager\'s most powerful tool. Done right, it\'s the single highest-leverage 30 minutes in your week.</p>' +
+                        '<div class="key-concept"><h3>The 30-Minute Template</h3><ol>' +
+                        '<li><strong>Their agenda first (10 min):</strong> "What\'s on your mind?" Let them drive. This is THEIR meeting.</li>' +
+                        '<li><strong>Coaching (10 min):</strong> Pick ONE thing to develop. Ask questions, don\'t give answers. "What have you tried? What would happen if...?"</li>' +
+                        '<li><strong>Alignment (5 min):</strong> "How does your work connect to our team\'s top 3 goals this quarter?"</li>' +
+                        '<li><strong>Personal check-in (5 min):</strong> "How are you feeling about work? Anything I can do to help?"</li></ol></div>' +
+                        '<h2>Common 1-on-1 Mistakes</h2>' +
+                        '<ul><li><strong>Status updates:</strong> "What did you do this week?" is a waste. Use Slack/standup for that.</li>' +
+                        '<li><strong>Manager\'s agenda only:</strong> If you\'re doing all the talking, you\'re not learning.</li>' +
+                        '<li><strong>Skipping them:</strong> Canceling 1-on-1s signals "you\'re not important enough."</li>' +
+                        '<li><strong>No follow-up:</strong> If you commit to something in a 1-on-1 and don\'t follow through, trust erodes.</li></ul>' +
+                        '<blockquote>"The 1-on-1 is the subordinate\'s meeting. Your job is to listen, coach, and remove obstacles." -- Andy Grove</blockquote>',
+                    quiz: [
+                        { q: 'In a 1-on-1, whose agenda should come first?', options: ['The manager\'s', 'The direct report\'s', 'HR\'s', 'It doesn\'t matter'], correct: 1, explanation: 'It\'s THEIR meeting. Start with "What\'s on your mind?" and let them drive. Your job is to listen and coach.' },
+                        { q: 'Which is a WASTE of 1-on-1 time?', options: ['Coaching on a specific skill', 'Status updates on tasks', 'Career development discussion', 'Personal check-in on wellbeing'], correct: 1, explanation: 'Status updates belong in Slack or standups. 1-on-1s are for coaching, development, and building trust -- things that can\'t happen in group settings.' },
+                        { q: 'You need to cancel a 1-on-1 due to a conflict. What should you do?', options: ['Just cancel it -- they\'ll understand', 'Reschedule immediately for the same week', 'Wait until next week\'s slot', 'Send an email summarizing what you would have discussed'], correct: 1, explanation: 'Always reschedule, never just cancel. Regularly canceling 1-on-1s tells the person "you\'re not a priority."' },
+                    ]
+                },
+                {
+                    id: 'l2_3', title: 'Giving Feedback That Actually Changes Behavior',
+                    content: '<h2>Giving Feedback That Changes Behavior</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
+                        '<p>Most feedback fails because it\'s vague ("good job"), delayed (annual review), or threatening ("you need to improve"). Here\'s what works.</p>' +
+                        '<div class="key-concept"><h3>The SBI Framework (Situation-Behavior-Impact)</h3>' +
+                        '<p>Developed by the Center for Creative Leadership. Used by Google, Amazon, and McKinsey.</p><ol>' +
+                        '<li><strong>Situation:</strong> When and where. "In yesterday\'s client meeting..."</li>' +
+                        '<li><strong>Behavior:</strong> What they DID (observable, not interpreted). "...you interrupted the client three times."</li>' +
+                        '<li><strong>Impact:</strong> What resulted. "The client seemed frustrated and cut the meeting short."</li></ol>' +
+                        '<p><strong>Then ask:</strong> "What was your perspective? How could we handle it differently next time?"</p></div>' +
+                        '<h2>Feedback Timing</h2>' +
+                        '<ul><li><strong>Within 24 hours:</strong> Specific behavior + context still fresh</li>' +
+                        '<li><strong>Private for correction:</strong> Never criticize publicly</li>' +
+                        '<li><strong>Public for praise:</strong> Specific praise in front of peers amplifies the behavior</li></ul>' +
+                        '<blockquote>"Feedback is a gift. But a gift delivered badly is just an attack." -- Kim Scott, Radical Candor</blockquote>',
+                    quiz: [
+                        { q: 'The SBI feedback model stands for:', options: ['Simple, Brief, Immediate', 'Situation, Behavior, Impact', 'Strengths, Barriers, Improvement', 'Start, Build, Iterate'], correct: 1, explanation: 'Situation (when/where), Behavior (what they did, observable), Impact (what resulted). Then ask for their perspective.' },
+                        { q: 'Which is better feedback: "You did a great job" or "In the client presentation, your data visualization made the ROI clear -- the client approved the budget on the spot"?', options: ['The first -- it\'s positive', 'The second -- it\'s specific', 'Both are equally good', 'Neither -- don\'t give praise publicly'], correct: 1, explanation: 'Specific feedback (SBI) tells the person exactly what to REPEAT. Vague praise feels good but teaches nothing.' },
+                        { q: 'When should corrective feedback be given?', options: ['In the next team meeting', 'During the annual review', 'Within 24 hours, privately', 'Wait until you see a pattern'], correct: 2, explanation: 'Within 24 hours while context is fresh, and always privately. Delayed or public correction destroys trust.' },
+                    ]
+                },
+            ]
+        },
+    ]
+};
+
+// ============================================================
+// STATE
+// ============================================================
+var progress = JSON.parse(localStorage.getItem('manager_course_progress') || '{}');
+var currentLesson = null;
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+function renderSidebar() {
+    var sb = document.getElementById('sidebar');
+    var html = '<h3>Course Modules</h3>';
+    var totalLessons = 0;
+    var completedLessons = 0;
+
+    COURSE.modules.forEach(function(mod) {
+        var modCompleted = mod.lessons.filter(function(l) { return progress[l.id]; }).length;
+        totalLessons += mod.lessons.length;
+        completedLessons += modCompleted;
+        var isOpen = mod.lessons.some(function(l) { return currentLesson && currentLesson.id === l.id; });
+
+        html += '<div class="module-header" onclick="toggleModule(\'' + mod.id + '\')">' +
+            '<span class="arrow ' + (isOpen ? 'open' : '') + '" id="arrow_' + mod.id + '">&#9654;</span>' +
+            '<span>' + mod.title + ' (' + modCompleted + '/' + mod.lessons.length + ')</span></div>';
+        html += '<div class="lesson-list ' + (isOpen ? 'open' : '') + '" id="lessons_' + mod.id + '">';
+        mod.lessons.forEach(function(lesson, idx) {
+            var isCompleted = progress[lesson.id];
+            var isActive = currentLesson && currentLesson.id === lesson.id;
+            var isLocked = idx > 0 && !progress[mod.lessons[idx-1].id];
+            html += '<div class="lesson-item ' + (isActive ? 'active' : '') + ' ' + (isCompleted ? 'completed' : '') + '" ' +
+                (isLocked ? 'style="opacity:0.4;cursor:not-allowed;" title="Pass previous quiz to unlock"' : 'onclick="loadLesson(\'' + mod.id + '\',\'' + lesson.id + '\')"') + '>' +
+                '<span class="icon">' + (isCompleted ? '&#10003;' : (isLocked ? '&#128274;' : '&#9675;')) + '</span>' +
+                '<span>' + lesson.title + '</span></div>';
+        });
+        html += '</div>';
+    });
+
+    var pct = totalLessons > 0 ? Math.round(completedLessons / totalLessons * 100) : 0;
+    html += '<div class="progress-mini"><div class="fill" style="width:' + pct + '%"></div></div>';
+    html += '<div style="padding:4px 16px;font-size:0.75rem;color:#64748b;">' + pct + '% complete (' + completedLessons + '/' + totalLessons + ')</div>';
+    sb.innerHTML = html;
+}
+
+function toggleModule(modId) {
+    var list = document.getElementById('lessons_' + modId);
+    var arrow = document.getElementById('arrow_' + modId);
+    list.classList.toggle('open');
+    arrow.classList.toggle('open');
+}
+
+// ============================================================
+// LESSON
+// ============================================================
+function loadLesson(modId, lessonId) {
+    var mod = COURSE.modules.find(function(m) { return m.id === modId; });
+    var lesson = mod.lessons.find(function(l) { return l.id === lessonId; });
+    currentLesson = lesson;
+    currentLesson._modId = modId;
+
+    var content = document.getElementById('content');
+    var quizHTML = '<div class="quiz-section"><h3>Knowledge Check</h3><div class="subtitle">Score 80% or higher to advance to the next lesson</div>';
+
+    lesson.quiz.forEach(function(q, qi) {
+        quizHTML += '<div class="quiz-q" id="qq_' + qi + '"><div class="question">' + (qi+1) + '. ' + q.q + '</div><div class="options">';
+        q.options.forEach(function(opt, oi) {
+            quizHTML += '<div class="option" id="opt_' + qi + '_' + oi + '" onclick="selectOption(' + qi + ',' + oi + ')">' + opt + '</div>';
+        });
+        quizHTML += '</div><div class="explanation" id="exp_' + qi + '">' + q.explanation + '</div></div>';
+    });
+
+    quizHTML += '<button class="btn-quiz" id="submitQuiz" onclick="submitQuiz()">Submit Answers</button>';
+    quizHTML += '<div id="quizResult"></div></div>';
+
+    // Nav buttons
+    var modIdx = COURSE.modules.indexOf(mod);
+    var lessonIdx = mod.lessons.indexOf(lesson);
+    var hasPrev = lessonIdx > 0 || modIdx > 0;
+    var hasNext = lessonIdx < mod.lessons.length - 1 || modIdx < COURSE.modules.length - 1;
+
+    var navHTML = '<div class="nav-buttons">';
+    if (hasPrev) {
+        navHTML += '<button class="btn-nav btn-prev" onclick="navPrev()">&#8592; Previous</button>';
+    } else {
+        navHTML += '<span></span>';
+    }
+    if (hasNext) {
+        var nextLocked = !progress[lesson.id];
+        navHTML += '<button class="btn-nav btn-next ' + (nextLocked ? 'locked' : '') + '" id="btnNext" ' + (nextLocked ? 'disabled' : 'onclick="navNext()"') + '>Next &#8594;</button>';
+    }
+    navHTML += '</div>';
+
+    content.innerHTML = '<h1>' + mod.title + '</h1><p style="color:#64748b;font-size:0.85rem;margin-bottom:24px;">' + mod.desc + '</p>' + lesson.content + quizHTML + navHTML;
+    renderSidebar();
+    content.scrollTop = 0;
+    document.getElementById('sidebar').classList.remove('open');
+}
+
+var selectedAnswers = {};
+
+function selectOption(qi, oi) {
+    // Deselect all in this question
+    var opts = document.querySelectorAll('#qq_' + qi + ' .option');
+    opts.forEach(function(o) { o.classList.remove('selected'); });
+    document.getElementById('opt_' + qi + '_' + oi).classList.add('selected');
+    selectedAnswers[qi] = oi;
+}
+
+function submitQuiz() {
+    var quiz = currentLesson.quiz;
+    var correct = 0;
+    var total = quiz.length;
+
+    quiz.forEach(function(q, qi) {
+        var selected = selectedAnswers[qi];
+        var opts = document.querySelectorAll('#qq_' + qi + ' .option');
+        opts.forEach(function(o) { o.style.pointerEvents = 'none'; });
+
+        if (selected === undefined) return;
+        if (selected === q.correct) {
+            document.getElementById('opt_' + qi + '_' + selected).classList.add('correct');
+            correct++;
+        } else {
+            document.getElementById('opt_' + qi + '_' + selected).classList.add('wrong');
+            document.getElementById('opt_' + qi + '_' + q.correct).classList.add('correct');
+        }
+        document.getElementById('exp_' + qi).style.display = 'block';
+    });
+
+    var pct = Math.round(correct / total * 100);
+    var pass = pct >= 80;
+    var resultDiv = document.getElementById('quizResult');
+
+    if (pass) {
+        progress[currentLesson.id] = true;
+        localStorage.setItem('manager_course_progress', JSON.stringify(progress));
+        resultDiv.innerHTML = '<div class="quiz-result pass"><h3 style="color:#22c55e;">' + pct + '% -- Passed!</h3><p style="color:#94a3b8;">You scored ' + correct + '/' + total + '. Next lesson unlocked.</p></div>';
+        var btnNext = document.getElementById('btnNext');
+        if (btnNext) { btnNext.disabled = false; btnNext.classList.remove('locked'); btnNext.onclick = navNext; }
+    } else {
+        resultDiv.innerHTML = '<div class="quiz-result fail"><h3 style="color:#ef4444;">' + pct + '% -- Not yet</h3><p style="color:#94a3b8;">You need 80% to advance. Review the lesson and try again.</p>' +
+            '<button class="btn-quiz" style="margin-top:12px;" onclick="retryQuiz()">Retry Quiz</button></div>';
+    }
+
+    document.getElementById('submitQuiz').style.display = 'none';
+    renderSidebar();
+}
+
+function retryQuiz() {
+    selectedAnswers = {};
+    loadLesson(currentLesson._modId, currentLesson.id);
+}
+
+function navNext() {
+    var mod = COURSE.modules.find(function(m) { return m.id === currentLesson._modId; });
+    var idx = mod.lessons.indexOf(currentLesson);
+    if (idx < mod.lessons.length - 1) {
+        loadLesson(mod.id, mod.lessons[idx + 1].id);
+    } else {
+        var modIdx = COURSE.modules.indexOf(mod);
+        if (modIdx < COURSE.modules.length - 1) {
+            var nextMod = COURSE.modules[modIdx + 1];
+            loadLesson(nextMod.id, nextMod.lessons[0].id);
+        }
+    }
+}
+
+function navPrev() {
+    var mod = COURSE.modules.find(function(m) { return m.id === currentLesson._modId; });
+    var idx = mod.lessons.indexOf(currentLesson);
+    if (idx > 0) {
+        loadLesson(mod.id, mod.lessons[idx - 1].id);
+    } else {
+        var modIdx = COURSE.modules.indexOf(mod);
+        if (modIdx > 0) {
+            var prevMod = COURSE.modules[modIdx - 1];
+            loadLesson(prevMod.id, prevMod.lessons[prevMod.lessons.length - 1].id);
+        }
+    }
+}
+
+// Init
+renderSidebar();
+</script>
+</body>
+</html>
