@@ -70,6 +70,10 @@ async def landing():
 async def assessment():
     with open("manager_profile.html", "r", encoding="utf-8") as f: return f.read()
 
+@app.get("/vak", response_class=HTMLResponse)
+async def vak():
+    with open("vak_assessment.html", "r", encoding="utf-8") as f: return f.read()
+
 @app.get("/games", response_class=HTMLResponse)
 async def games():
     with open("manager_games.html", "r", encoding="utf-8") as f: return f.read()
