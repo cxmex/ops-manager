@@ -201,7 +201,12 @@ var scores = { PeopleBuilder:0, ProcessArchitect:0, StrategicThinker:0, ChangeDr
 var startTime = 0, timerInt = null;
 var g1Round = 0, g2Round = 0, g3Round = 0;
 
-function startGames() { startTime = Date.now(); showTransition(0); }
+function startGames() {
+    startTime = Date.now();
+    document.getElementById('landingScreen').classList.remove('active');
+    document.getElementById('landingScreen').style.display = 'none';
+    showTransition(0);
+}
 
 function showTransition(gi) {
     var games = [
