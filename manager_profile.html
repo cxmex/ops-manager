@@ -100,6 +100,7 @@
 <nav class="navbar">
     <a href="/" class="active t" data-en="Home" data-es="Inicio">Inicio</a>
     <a href="/assessment" class="t" data-en="Assessment" data-es="Evaluacion">Evaluacion</a>
+    <a href="/vak" class="t" data-en="VAK" data-es="VAK">VAK</a>
     <a href="/games" class="t" data-en="Games" data-es="Juegos">Juegos</a>
     <a href="/academy" class="t" data-en="Academy" data-es="Academia">Academia</a>
 </nav>
@@ -418,8 +419,15 @@ function showResults(scores, sorted, primary, secondary, weakest, famousMatch) {
                 '<button onclick="saveEmailPost()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">' + T('Save', 'Guardar') + '</button></div>' +
             '<div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>' +
 
+        '<div class="section-card" style="text-align:center;border:1px solid #3b82f6;">' +
+            '<p style="font-size:0.7rem;color:#3b82f6;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">' + T('Next Step', 'Siguiente Paso') + '</p>' +
+            '<p style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">' + T('Discover How You Process Information', 'Descubre Como Procesas la Informacion') + '</p>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:16px;">' + T('Complete your leadership profile with the VAK + DISC assessment. Understand if you are Visual, Auditory, or Kinesthetic -- and how it affects your management style.', 'Completa tu perfil de liderazgo con la evaluacion VAK + DISC. Entiende si eres Visual, Auditivo o Kinestesico -- y como afecta tu estilo de gestion.') + '</p>' +
+            '<a href="/vak" style="display:inline-block;padding:14px 32px;background:#3b82f6;color:white;border-radius:10px;text-decoration:none;font-weight:600;font-size:1rem;">' + T('Take VAK Assessment', 'Tomar Evaluacion VAK') + '</a>' +
+            '<p style="font-size:0.75rem;color:#64748b;margin-top:8px;">~5 min</p></div>' +
+
         '<div class="section-card" style="text-align:center;">' +
-            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:8px;">' + T('Want to discover more through gameplay?', 'Quieres descubrir mas a traves de juegos?') + '</p>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:8px;">' + T('More ways to explore your leadership', 'Mas formas de explorar tu liderazgo') + '</p>' +
             '<a href="/games" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">' + T('Play the Manager Games', 'Jugar los Juegos de Manager') + '</a>' +
             '<br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">' + T('Start the Academy', 'Iniciar la Academia') + '</a></div>';
 
