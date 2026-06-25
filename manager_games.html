@@ -150,74 +150,74 @@ var DELEGATION = [
         { text: "Offer lateral growth -- a challenging cross-functional project to build new skills", text_es: "Ofrecer crecimiento lateral -- un proyecto cross-funcional retador para desarrollar nuevas habilidades", dims: {StrategicThinker:2, PeopleBuilder:2, ChangeDriver:1} },
       ]
     },
-    { title: "Underperforming Team Member", context: "One person consistently misses deadlines. The rest of the team notices and morale is dropping.",
+    { title: "Underperforming Team Member", title_es: "Miembro del Equipo con Bajo Rendimiento", context: "One person consistently misses deadlines. The rest of the team notices and morale is dropping.", context_es: "Una persona consistentemente no cumple los plazos. El resto del equipo lo nota y la moral esta bajando.",
       options: [
-        { text: "Private 1-on-1: understand the root cause, create a performance improvement plan", dims: {PeopleBuilder:3, ProcessArchitect:1, CultureKeeper:1} },
-        { text: "Set clear expectations with consequences, document everything", dims: {ResultsDriver:3, ProcessArchitect:2} },
-        { text: "Reassign their work to others for now, address it when there's less pressure", dims: {CultureKeeper:1, StrategicThinker:1} },
-        { text: "Address it in a team retro -- make accountability a team-level conversation", dims: {CultureKeeper:2, ChangeDriver:2, ResultsDriver:1} },
+        { text: "Private 1-on-1: understand the root cause, create a performance improvement plan", text_es: "1-a-1 privado: entender la causa raiz, crear un plan de mejora de desempeno", dims: {PeopleBuilder:3, ProcessArchitect:1, CultureKeeper:1} },
+        { text: "Set clear expectations with consequences, document everything", text_es: "Establecer expectativas claras con consecuencias, documentar todo", dims: {ResultsDriver:3, ProcessArchitect:2} },
+        { text: "Reassign their work to others for now, address it when there's less pressure", text_es: "Reasignar su trabajo a otros por ahora, abordarlo cuando haya menos presion", dims: {CultureKeeper:1, StrategicThinker:1} },
+        { text: "Address it in a team retro -- make accountability a team-level conversation", text_es: "Abordarlo en una retro de equipo -- hacer de la responsabilidad una conversacion grupal", dims: {CultureKeeper:2, ChangeDriver:2, ResultsDriver:1} },
       ]
     },
 ];
 
 var CRISIS = [
-    { title: "Server Down During Peak Hours", context: "Your main service is down. Customers are complaining. Your team is panicking. You have 3 options for the next 10 minutes.",
+    { title: "Server Down During Peak Hours", title_es: "Servidor Caido en Horas Pico", context: "Your main service is down. Customers are complaining. Your team is panicking. You have 3 options for the next 10 minutes.", context_es: "Tu servicio principal esta caido. Los clientes se quejan. Tu equipo esta en panico. Tienes 3 opciones para los proximos 10 minutos.",
       options: [
-        { text: "Take command: assign specific roles (comms, debugging, escalation), give 5-min status updates", dims: {ResultsDriver:3, ProcessArchitect:2} },
-        { text: "Trust your team: 'Who knows the most about this system? You lead the fix, I'll handle comms.'", dims: {PeopleBuilder:2, CultureKeeper:2, ChangeDriver:1} },
-        { text: "Follow the incident playbook step by step -- that's why we wrote it", dims: {ProcessArchitect:3, ResultsDriver:1} },
+        { text: "Take command: assign specific roles (comms, debugging, escalation), give 5-min status updates", text_es: "Tomar el mando: asignar roles especificos (comunicacion, debugging, escalacion), dar actualizaciones cada 5 min", dims: {ResultsDriver:3, ProcessArchitect:2} },
+        { text: "Trust your team: 'Who knows the most about this system? You lead the fix, I'll handle comms.'", text_es: "Confiar en tu equipo: 'Quien sabe mas de este sistema? Tu lidera la solucion, yo manejo la comunicacion.'", dims: {PeopleBuilder:2, CultureKeeper:2, ChangeDriver:1} },
+        { text: "Follow the incident playbook step by step -- that's why we wrote it", text_es: "Seguir el playbook de incidentes paso a paso -- para eso lo escribimos", dims: {ProcessArchitect:3, ResultsDriver:1} },
       ]
     },
-    { title: "Key Person Quits With No Notice", context: "Your most knowledgeable team member just resigned effective immediately. They hold critical institutional knowledge.",
+    { title: "Key Person Quits With No Notice", title_es: "Persona Clave Renuncia Sin Aviso", context: "Your most knowledgeable team member just resigned effective immediately. They hold critical institutional knowledge.", context_es: "Tu miembro de equipo con mas conocimiento acaba de renunciar con efecto inmediato. Tiene conocimiento institucional critico.",
       options: [
-        { text: "Immediately schedule knowledge transfer sessions, document everything they know", dims: {ProcessArchitect:3, StrategicThinker:1, ResultsDriver:1} },
-        { text: "Redistribute their work, use this as an opportunity to reduce single points of failure", dims: {StrategicThinker:3, ProcessArchitect:1, ChangeDriver:1} },
-        { text: "Have an honest exit conversation -- understand why, and address root causes for the rest of the team", dims: {CultureKeeper:3, PeopleBuilder:2} },
+        { text: "Immediately schedule knowledge transfer sessions, document everything they know", text_es: "Programar sesiones de transferencia de conocimiento inmediatamente, documentar todo lo que saben", dims: {ProcessArchitect:3, StrategicThinker:1, ResultsDriver:1} },
+        { text: "Redistribute their work, use this as an opportunity to reduce single points of failure", text_es: "Redistribuir su trabajo, usar esto como oportunidad para reducir puntos unicos de falla", dims: {StrategicThinker:3, ProcessArchitect:1, ChangeDriver:1} },
+        { text: "Have an honest exit conversation -- understand why, and address root causes for the rest of the team", text_es: "Tener una conversacion de salida honesta -- entender por que, y abordar las causas raiz para el resto del equipo", dims: {CultureKeeper:3, PeopleBuilder:2} },
       ]
     },
-    { title: "Budget Cut: Lose 2 of 8 Team Members", context: "Leadership says you need to cut 25% of your team by end of month. Your team doesn't know yet.",
+    { title: "Budget Cut: Lose 2 of 8 Team Members", title_es: "Recorte de Presupuesto: Perder 2 de 8 Miembros", context: "Leadership says you need to cut 25% of your team by end of month. Your team doesn't know yet.", context_es: "La direccion dice que necesitas recortar el 25% de tu equipo para fin de mes. Tu equipo aun no lo sabe.",
       options: [
-        { text: "Analyze: which roles are most critical? Keep the ones with the highest impact per dollar", dims: {StrategicThinker:3, ResultsDriver:2} },
-        { text: "Push back: present data showing the cost of these cuts to leadership", dims: {ChangeDriver:3, ResultsDriver:1, StrategicThinker:1} },
-        { text: "Be transparent with the team immediately. Let them know what's happening and involve them in solutions", dims: {CultureKeeper:3, PeopleBuilder:2} },
+        { text: "Analyze: which roles are most critical? Keep the ones with the highest impact per dollar", text_es: "Analizar: cuales roles son mas criticos? Mantener los de mayor impacto por peso invertido", dims: {StrategicThinker:3, ResultsDriver:2} },
+        { text: "Push back: present data showing the cost of these cuts to leadership", text_es: "Empujar de vuelta: presentar datos mostrando el costo de estos recortes a la direccion", dims: {ChangeDriver:3, ResultsDriver:1, StrategicThinker:1} },
+        { text: "Be transparent with the team immediately. Let them know what's happening and involve them in solutions", text_es: "Ser transparente con el equipo inmediatamente. Hacerles saber que esta pasando e involucrarlos en soluciones", dims: {CultureKeeper:3, PeopleBuilder:2} },
       ]
     },
-    { title: "Cross-Team Conflict Escalates", context: "Two of your team members are in open conflict. It's affecting the whole team's productivity. Other teams are starting to notice.",
+    { title: "Cross-Team Conflict Escalates", title_es: "Conflicto Entre Equipos Escala", context: "Two of your team members are in open conflict. It's affecting the whole team's productivity. Other teams are starting to notice.", context_es: "Dos miembros de tu equipo estan en conflicto abierto. Esta afectando la productividad de todo el equipo. Otros equipos lo estan notando.",
       options: [
-        { text: "Mediate: bring both people together, facilitate a structured conversation about needs and expectations", dims: {CultureKeeper:3, PeopleBuilder:2} },
-        { text: "Separate: reassign them to different projects so they don't need to work together", dims: {ProcessArchitect:2, ResultsDriver:1, StrategicThinker:1} },
-        { text: "Escalate: this is a behavioral issue -- document it and involve HR", dims: {ResultsDriver:2, ProcessArchitect:2} },
-        { text: "Address it as a team: 'We have a communication problem. Let's fix our working agreements.'", dims: {ChangeDriver:2, CultureKeeper:2, PeopleBuilder:1} },
+        { text: "Mediate: bring both people together, facilitate a structured conversation about needs and expectations", text_es: "Mediar: reunir a ambas personas, facilitar una conversacion estructurada sobre necesidades y expectativas", dims: {CultureKeeper:3, PeopleBuilder:2} },
+        { text: "Separate: reassign them to different projects so they don't need to work together", text_es: "Separar: reasignarlos a proyectos diferentes para que no necesiten trabajar juntos", dims: {ProcessArchitect:2, ResultsDriver:1, StrategicThinker:1} },
+        { text: "Escalate: this is a behavioral issue -- document it and involve HR", text_es: "Escalar: es un problema de conducta -- documentarlo e involucrar a RH", dims: {ResultsDriver:2, ProcessArchitect:2} },
+        { text: "Address it as a team: 'We have a communication problem. Let's fix our working agreements.'", text_es: "Abordarlo como equipo: 'Tenemos un problema de comunicacion. Arreglemos nuestros acuerdos de trabajo.'", dims: {ChangeDriver:2, CultureKeeper:2, PeopleBuilder:1} },
       ]
     },
 ];
 
 var TEAM_BUILD = [
-    { title: "Allocate Your Weekly 1-on-1 Time", context: "You have 6 team members and 3 hours/week for 1-on-1s. How do you distribute?", total: 180,
+    { title: "Allocate Your Weekly 1-on-1 Time", title_es: "Asigna Tu Tiempo Semanal de 1-a-1", context: "You have 6 team members and 3 hours/week for 1-on-1s. How do you distribute?", context_es: "Tienes 6 miembros de equipo y 3 horas/semana para 1-a-1. Como las distribuyes?", total: 180,
       areas: [
-        { name: "Coaching/development", dim: "PeopleBuilder" },
-        { name: "Status updates/blockers", dim: "ProcessArchitect" },
-        { name: "Strategic alignment", dim: "StrategicThinker" },
-        { name: "Personal check-in/wellbeing", dim: "CultureKeeper" },
-        { name: "Goal tracking/accountability", dim: "ResultsDriver" },
+        { name: "Coaching/development", name_es: "Coaching/desarrollo", dim: "PeopleBuilder" },
+        { name: "Status updates/blockers", name_es: "Actualizaciones/bloqueos", dim: "ProcessArchitect" },
+        { name: "Strategic alignment", name_es: "Alineacion estrategica", dim: "StrategicThinker" },
+        { name: "Personal check-in/wellbeing", name_es: "Check-in personal/bienestar", dim: "CultureKeeper" },
+        { name: "Goal tracking/accountability", name_es: "Seguimiento de metas", dim: "ResultsDriver" },
       ]
     },
-    { title: "Design Your Team's Meeting Rhythm", context: "You're redesigning how your team communicates. Allocate 100 points across meeting types.", total: 100,
+    { title: "Design Your Team's Meeting Rhythm", title_es: "Disena el Ritmo de Juntas de Tu Equipo", context: "You're redesigning how your team communicates. Allocate 100 points across meeting types.", context_es: "Estas rediseando como se comunica tu equipo. Asigna 100 puntos entre tipos de juntas.", total: 100,
       areas: [
-        { name: "Daily standup (15 min)", dim: "ProcessArchitect" },
-        { name: "Weekly team sync (1 hr)", dim: "ResultsDriver" },
-        { name: "Monthly strategy review", dim: "StrategicThinker" },
-        { name: "Quarterly team retrospective", dim: "CultureKeeper" },
-        { name: "Ad-hoc innovation time", dim: "ChangeDriver" },
+        { name: "Daily standup (15 min)", name_es: "Daily standup (15 min)", dim: "ProcessArchitect" },
+        { name: "Weekly team sync (1 hr)", name_es: "Sync semanal de equipo (1 hr)", dim: "ResultsDriver" },
+        { name: "Monthly strategy review", name_es: "Revision estrategica mensual", dim: "StrategicThinker" },
+        { name: "Quarterly team retrospective", name_es: "Retrospectiva trimestral", dim: "CultureKeeper" },
+        { name: "Ad-hoc innovation time", name_es: "Tiempo de innovacion libre", dim: "ChangeDriver" },
       ]
     },
-    { title: "Build Your Ideal Team Culture", context: "You can emphasize 5 values. How much weight do you give each?", total: 100,
+    { title: "Build Your Ideal Team Culture", title_es: "Construye Tu Cultura de Equipo Ideal", context: "You can emphasize 5 values. How much weight do you give each?", context_es: "Puedes enfatizar 5 valores. Cuanto peso le das a cada uno?", total: 100,
       areas: [
-        { name: "Growth & learning", dim: "PeopleBuilder" },
-        { name: "Efficiency & quality", dim: "ProcessArchitect" },
-        { name: "Innovation & experimentation", dim: "ChangeDriver" },
-        { name: "Trust & psychological safety", dim: "CultureKeeper" },
-        { name: "Accountability & results", dim: "ResultsDriver" },
+        { name: "Growth & learning", name_es: "Crecimiento y aprendizaje", dim: "PeopleBuilder" },
+        { name: "Efficiency & quality", name_es: "Eficiencia y calidad", dim: "ProcessArchitect" },
+        { name: "Innovation & experimentation", name_es: "Innovacion y experimentacion", dim: "ChangeDriver" },
+        { name: "Trust & psychological safety", name_es: "Confianza y seguridad psicologica", dim: "CultureKeeper" },
+        { name: "Accountability & results", name_es: "Responsabilidad y resultados", dim: "ResultsDriver" },
       ]
     },
 ];
@@ -236,9 +236,9 @@ function startGames() {
 
 function showTransition(gi) {
     var games = [
-        { emoji: "&#128101;", title: "Delegation Decisions", desc: "4 real management scenarios. Your choices reveal how you lead." },
-        { emoji: "&#128680;", title: "Crisis Management", desc: "4 urgent situations. How you respond under pressure defines your style." },
-        { emoji: "&#127793;", title: "Team Building", desc: "Allocate time, design meetings, and build culture. Where you invest reveals your priorities." },
+        { emoji: "&#128101;", title: T("Delegation Decisions","Decisiones de Delegacion"), desc: T("4 real management scenarios. Your choices reveal how you lead.","4 escenarios reales de gestion. Tus decisiones revelan como lideras.") },
+        { emoji: "&#128680;", title: T("Crisis Management","Manejo de Crisis"), desc: T("4 urgent situations. How you respond under pressure defines your style.","4 situaciones urgentes. Como respondes bajo presion define tu estilo.") },
+        { emoji: "&#127793;", title: T("Team Building","Construccion de Equipo"), desc: T("Allocate time, design meetings, and build culture. Where you invest reveals your priorities.","Asigna tiempo, disena reuniones y construye cultura. Donde inviertes revela tus prioridades.") },
     ];
     if (gi >= games.length) { showResults(); return; }
     var t = document.getElementById('transitionScreen'); t.classList.add('active');
@@ -252,37 +252,39 @@ function showTransition(gi) {
 function formatTime(ms) { var s = Math.floor(ms/1000); return Math.floor(s/60) + ':' + (s%60<10?'0':'') + (s%60); }
 
 // GAME 1: DELEGATION
-function startG1() { g1Round=0; var s=document.getElementById('game1Screen'); s.classList.add('active'); s.style.display='flex'; renderG1(); timerInt=setInterval(function(){ document.getElementById('g1Timer').textContent=formatTime(Date.now()-startTime); },1000); }
+function startG1() { g1Round=0; var s=document.getElementById('game1Screen'); s.classList.add('active'); s.style.display='flex'; document.getElementById('g1Label').textContent=T('Game 1: Delegation','Juego 1: Delegacion'); renderG1(); timerInt=setInterval(function(){ document.getElementById('g1Timer').textContent=formatTime(Date.now()-startTime); },1000); }
 function renderG1() {
     if (g1Round>=DELEGATION.length) { clearInterval(timerInt); document.getElementById('game1Screen').classList.remove('active'); document.getElementById('game1Screen').style.display='none'; showTransition(1); return; }
     document.getElementById('g1Progress').style.width=(g1Round/DELEGATION.length*100)+'%';
-    document.getElementById('g1Label').textContent='Scenario '+(g1Round+1)+'/'+DELEGATION.length;
-    var sc=DELEGATION[g1Round], html='<div class="scenario-card"><h2>'+sc.title+'</h2><p>'+sc.context+'</p></div>';
-    sc.options.forEach(function(opt,i){ html+='<button class="choice-btn" onclick="pickG1('+g1Round+','+i+',this)">'+opt.text+'</button>'; });
+    document.getElementById('g1Label').textContent=T('Scenario','Escenario')+' '+(g1Round+1)+'/'+DELEGATION.length;
+    var sc=DELEGATION[g1Round], html='<div class="scenario-card"><h2>'+(currentLang==='es'?(sc.title_es||sc.title):sc.title)+'</h2><p>'+(currentLang==='es'?(sc.context_es||sc.context):sc.context)+'</p></div>';
+    sc.options.forEach(function(opt,i){ html+='<button class="choice-btn" onclick="pickG1('+g1Round+','+i+',this)">'+(currentLang==='es'?(opt.text_es||opt.text):opt.text)+'</button>'; });
     document.getElementById('g1Area').innerHTML=html;
 }
 function pickG1(round,idx,el) { var dims=DELEGATION[round].options[idx].dims; for(var d in dims) scores[d]=(scores[d]||0)+dims[d]; el.classList.add('selected'); setTimeout(function(){ g1Round++; renderG1(); },500); }
 
 // GAME 2: CRISIS
-function startG2() { g2Round=0; var s=document.getElementById('game2Screen'); s.classList.add('active'); s.style.display='flex'; renderG2(); timerInt=setInterval(function(){ document.getElementById('g2Timer').textContent=formatTime(Date.now()-startTime); },1000); }
+function startG2() { g2Round=0; var s=document.getElementById('game2Screen'); s.classList.add('active'); s.style.display='flex'; document.getElementById('g2Label').textContent=T('Game 2: Crisis Management','Juego 2: Manejo de Crisis'); renderG2(); timerInt=setInterval(function(){ document.getElementById('g2Timer').textContent=formatTime(Date.now()-startTime); },1000); }
 function renderG2() {
     if (g2Round>=CRISIS.length) { clearInterval(timerInt); document.getElementById('game2Screen').classList.remove('active'); document.getElementById('game2Screen').style.display='none'; showTransition(2); return; }
     document.getElementById('g2Progress').style.width=(g2Round/CRISIS.length*100)+'%';
-    var sc=CRISIS[g2Round], html='<div class="scenario-card"><h2>'+sc.title+'</h2><p>'+sc.context+'</p></div>';
-    sc.options.forEach(function(opt,i){ html+='<button class="choice-btn" onclick="pickG2('+g2Round+','+i+',this)">'+opt.text+'</button>'; });
+    document.getElementById('g2Label').textContent=T('Scenario','Escenario')+' '+(g2Round+1)+'/'+CRISIS.length;
+    var sc=CRISIS[g2Round], html='<div class="scenario-card"><h2>'+(currentLang==='es'?(sc.title_es||sc.title):sc.title)+'</h2><p>'+(currentLang==='es'?(sc.context_es||sc.context):sc.context)+'</p></div>';
+    sc.options.forEach(function(opt,i){ html+='<button class="choice-btn" onclick="pickG2('+g2Round+','+i+',this)">'+(currentLang==='es'?(opt.text_es||opt.text):opt.text)+'</button>'; });
     document.getElementById('g2Area').innerHTML=html;
 }
 function pickG2(round,idx,el) { var dims=CRISIS[round].options[idx].dims; for(var d in dims) scores[d]=(scores[d]||0)+dims[d]; el.classList.add('selected'); setTimeout(function(){ g2Round++; renderG2(); },500); }
 
 // GAME 3: TEAM BUILDING (sliders)
-function startG3() { g3Round=0; var s=document.getElementById('game3Screen'); s.classList.add('active'); s.style.display='flex'; renderG3(); timerInt=setInterval(function(){ document.getElementById('g3Timer').textContent=formatTime(Date.now()-startTime); },1000); }
+function startG3() { g3Round=0; var s=document.getElementById('game3Screen'); s.classList.add('active'); s.style.display='flex'; document.getElementById('g3Label').textContent=T('Game 3: Team Building','Juego 3: Construccion de Equipo'); renderG3(); timerInt=setInterval(function(){ document.getElementById('g3Timer').textContent=formatTime(Date.now()-startTime); },1000); }
 function renderG3() {
     if (g3Round>=TEAM_BUILD.length) { clearInterval(timerInt); document.getElementById('game3Screen').classList.remove('active'); document.getElementById('game3Screen').style.display='none'; showResults(); return; }
     document.getElementById('g3Progress').style.width=(g3Round/TEAM_BUILD.length*100)+'%';
+    document.getElementById('g3Label').textContent=T('Scenario','Escenario')+' '+(g3Round+1)+'/'+TEAM_BUILD.length;
     var sc=TEAM_BUILD[g3Round], defVal=Math.round(sc.total/sc.areas.length);
-    var html='<div class="card"><h2>'+sc.title+'</h2><p>'+sc.context+'</p>';
-    sc.areas.forEach(function(a,i){ html+='<div class="slider-row"><span class="label">'+a.name+'</span><input type="range" min="0" max="'+Math.round(sc.total*0.6)+'" value="'+defVal+'" id="sl_'+g3Round+'_'+i+'" oninput="updateSl('+g3Round+')"><span class="value" id="sv_'+g3Round+'_'+i+'">'+defVal+'</span></div>'; });
-    html+='<button class="btn btn-primary" style="margin-top:12px;" onclick="submitG3('+g3Round+')">Confirm</button></div>';
+    var html='<div class="card"><h2>'+(currentLang==='es'?(sc.title_es||sc.title):sc.title)+'</h2><p>'+(currentLang==='es'?(sc.context_es||sc.context):sc.context)+'</p>';
+    sc.areas.forEach(function(a,i){ html+='<div class="slider-row"><span class="label">'+(currentLang==='es'?(a.name_es||a.name):a.name)+'</span><input type="range" min="0" max="'+Math.round(sc.total*0.6)+'" value="'+defVal+'" id="sl_'+g3Round+'_'+i+'" oninput="updateSl('+g3Round+')"><span class="value" id="sv_'+g3Round+'_'+i+'">'+defVal+'</span></div>'; });
+    html+='<button class="btn btn-primary" style="margin-top:12px;" onclick="submitG3('+g3Round+')">'+T('Confirm','Confirmar')+'</button></div>';
     document.getElementById('g3Area').innerHTML=html;
 }
 function updateSl(round) { TEAM_BUILD[round].areas.forEach(function(a,i){ document.getElementById('sv_'+round+'_'+i).textContent=document.getElementById('sl_'+round+'_'+i).value; }); }
@@ -301,22 +303,26 @@ function showResults() {
     var sorted=Object.entries(pct).sort(function(a,b){return b[1]-a[1];});
     var topKey=sorted[0][0];
     var NAMES={PeopleBuilder:'People Builder',ProcessArchitect:'Process Architect',StrategicThinker:'Strategic Thinker',ChangeDriver:'Change Driver',CultureKeeper:'Culture Keeper',ResultsDriver:'Results Driver'};
+    var NAMES_ES={PeopleBuilder:'Constructor de Personas',ProcessArchitect:'Arquitecto de Procesos',StrategicThinker:'Pensador Estrategico',ChangeDriver:'Motor de Cambio',CultureKeeper:'Guardian de Cultura',ResultsDriver:'Impulsor de Resultados'};
     var TAGS={PeopleBuilder:'You grow people.',ProcessArchitect:'You build systems.',StrategicThinker:'You see the big picture.',ChangeDriver:'You drive transformation.',CultureKeeper:'You create safety.',ResultsDriver:'You deliver outcomes.'};
+    var TAGS_ES={PeopleBuilder:'Desarrollas personas.',ProcessArchitect:'Construyes sistemas.',StrategicThinker:'Ves el panorama completo.',ChangeDriver:'Impulsas la transformacion.',CultureKeeper:'Creas seguridad.',ResultsDriver:'Entregas resultados.'};
     var COLORS={PeopleBuilder:'#22c55e',ProcessArchitect:'#60a5fa',StrategicThinker:'#a78bfa',ChangeDriver:'#f59e0b',CultureKeeper:'#ec4899',ResultsDriver:'#ef4444'};
-    var shareText="I'm a "+NAMES[topKey]+" manager! "+TAGS[topKey]+" What kind of manager are you?";
+    var displayNames = currentLang==='es' ? NAMES_ES : NAMES;
+    var displayTags = currentLang==='es' ? TAGS_ES : TAGS;
+    var shareText = currentLang==='es' ? "Soy un manager "+displayNames[topKey]+"! "+displayTags[topKey]+" Que tipo de manager eres tu?" : "I'm a "+NAMES[topKey]+" manager! "+TAGS[topKey]+" What kind of manager are you?";
     var barsHTML='';
-    sorted.forEach(function(e){ barsHTML+='<div class="dim-row"><span class="nm">'+NAMES[e[0]].split(' ')[0]+'</span><div class="bar-bg"><div class="bar-fg" style="width:0%;background:'+COLORS[e[0]]+';" data-pct="'+e[1]+'"></div></div><span class="pct">'+e[1]+'%</span></div>'; });
+    sorted.forEach(function(e){ barsHTML+='<div class="dim-row"><span class="nm">'+displayNames[e[0]].split(' ')[0]+'</span><div class="bar-bg"><div class="bar-fg" style="width:0%;background:'+COLORS[e[0]]+';" data-pct="'+e[1]+'"></div></div><span class="pct">'+e[1]+'%</span></div>'; });
 
     document.getElementById('resultsArea').innerHTML=
-        '<div class="result-card" style="text-align:center;"><p style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:2px;">Your Leadership Style</p><div class="archetype-badge" style="color:'+COLORS[topKey]+'">'+NAMES[topKey]+'</div><p style="color:#94a3b8;font-style:italic;">'+TAGS[topKey]+'</p>'+barsHTML+'<p style="margin-top:12px;font-size:0.8rem;color:#64748b;">Game duration: '+formatTime(dur)+'</p></div>'+
-        '<div class="result-card"><div style="text-align:center;"><p style="font-size:0.95rem;color:#94a3b8;margin-bottom:12px;">Share your leadership style</p><div class="share-row"><a class="wa-btn" href="https://wa.me/?text='+encodeURIComponent(shareText)+'" target="_blank">WhatsApp</a><button class="copy-btn" onclick="navigator.clipboard.writeText(window.location.href).then(function(){this.textContent=\'Copied!\'}.bind(this))">Copy link</button></div></div></div>'+
-        '<div class="result-card"><div style="text-align:center;"><p style="font-size:1rem;font-weight:600;margin-bottom:4px;">Save your results</p><p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">Get your full leadership report</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;"><input type="email" id="postEmail" placeholder="you@email.com" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;"><button onclick="saveEmail()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Save</button></div><div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>'+
-        '<div class="result-card" style="text-align:center;"><a href="/assessment" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">Take Full Assessment</a><br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">Start the Academy</a></div>';
+        '<div class="result-card" style="text-align:center;"><p style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:2px;">'+T('Your Leadership Style','Tu Estilo de Liderazgo')+'</p><div class="archetype-badge" style="color:'+COLORS[topKey]+'">'+displayNames[topKey]+'</div><p style="color:#94a3b8;font-style:italic;">'+displayTags[topKey]+'</p>'+barsHTML+'<p style="margin-top:12px;font-size:0.8rem;color:#64748b;">'+T('Game duration: ','Duracion del juego: ')+formatTime(dur)+'</p></div>'+
+        '<div class="result-card"><div style="text-align:center;"><p style="font-size:0.95rem;color:#94a3b8;margin-bottom:12px;">'+T('Share your leadership style','Comparte tu estilo de liderazgo')+'</p><div class="share-row"><a class="wa-btn" href="https://wa.me/?text='+encodeURIComponent(shareText)+'" target="_blank">WhatsApp</a><button class="copy-btn" onclick="navigator.clipboard.writeText(window.location.href).then(function(){this.textContent=\''+T('Copied!','Copiado!')+'\'}.bind(this))">'+T('Copy link','Copiar link')+'</button></div></div></div>'+
+        '<div class="result-card"><div style="text-align:center;"><p style="font-size:1rem;font-weight:600;margin-bottom:4px;">'+T('Save your results','Guarda tus resultados')+'</p><p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">'+T('Get your full leadership report','Recibe tu reporte completo de liderazgo')+'</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;"><input type="email" id="postEmail" placeholder="you@email.com" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;"><button onclick="saveEmail()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">'+T('Save','Guardar')+'</button></div><div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>'+
+        '<div class="result-card" style="text-align:center;"><a href="/assessment" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">'+T('Take Full Assessment','Tomar Evaluacion Completa')+'</a><br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">'+T('Start the Academy','Iniciar la Academia')+'</a></div>';
 
     setTimeout(function(){ document.querySelectorAll('.bar-fg').forEach(function(b){ b.style.width=b.dataset.pct+'%'; }); },300);
     fetch('/api/game/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:'anonymous_'+Date.now(),game_type:'manager_games',scores:scores,percentages:pct,dominant_trait:topKey,duration_ms:dur,timestamp:new Date().toISOString()})}).catch(function(){});
 }
-async function saveEmail(){ var e=document.getElementById('postEmail').value.trim().toLowerCase(); if(!e||!e.includes('@')){alert('Enter a valid email');return;} try{await fetch('/api/manager-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,scores:scores,source:'games',timestamp:new Date().toISOString()})});}catch(x){} document.getElementById('saveMsg').textContent='Results saved!'; document.getElementById('saveMsg').style.display='block'; document.getElementById('postEmail').disabled=true; }
+async function saveEmail(){ var e=document.getElementById('postEmail').value.trim().toLowerCase(); if(!e||!e.includes('@')){alert(T('Enter a valid email','Ingresa un email valido'));return;} try{await fetch('/api/manager-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,scores:scores,source:'games',timestamp:new Date().toISOString()})});}catch(x){} document.getElementById('saveMsg').textContent=T('Results saved!','Resultados guardados!'); document.getElementById('saveMsg').style.display='block'; document.getElementById('postEmail').disabled=true; }
 </script>
 </body>
 </html>
