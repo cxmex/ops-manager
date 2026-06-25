@@ -84,6 +84,9 @@
         .radar-svg .score-text { fill: #3b82f6; font-size: 9px; font-weight: 700; font-family: sans-serif; }
         .radar-svg .axis { stroke: #334155; stroke-width: 0.5; }
 
+        .lang-toggle { display: flex; gap: 2px; background: #0f172a; border-radius: 8px; padding: 3px; margin-bottom: 16px; justify-content: center; }
+        .lang-btn { padding: 6px 16px; border-radius: 6px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b; transition: all 0.2s; }
+        .lang-btn.active { background: #3b82f6; color: white; }
         @media (max-width: 600px) {
             .landing-card { padding: 28px 20px; }
             .landing-card h1 { font-size: 1.4rem; }
@@ -95,28 +98,25 @@
 <body>
 
 <nav class="navbar">
-    <a href="/" class="active">Home</a>
-    <a href="/assessment">Assessment</a>
-    <a href="/games">Games</a>
-    <a href="/academy">Academy</a>
+    <a href="/" class="active t" data-en="Home" data-es="Inicio">Inicio</a>
+    <a href="/assessment" class="t" data-en="Assessment" data-es="Evaluacion">Evaluacion</a>
+    <a href="/games" class="t" data-en="Games" data-es="Juegos">Juegos</a>
+    <a href="/academy" class="t" data-en="Academy" data-es="Academia">Academia</a>
 </nav>
 
 <!-- LANDING -->
 <div class="screen active" id="landingScreen">
     <div class="landing-card">
-        <div class="tag">Research-backed</div>
-        <h1>What Kind of Manager Are You?</h1>
-        <div class="sub">5-minute assessment based on Google's Project Aristotle, Harvard leadership research, and McKinsey's organizational health framework. Discover your management style across 6 dimensions.</div>
-        <div class="dims-grid">
-            <span class="dim-chip">People Builder</span>
-            <span class="dim-chip">Process Architect</span>
-            <span class="dim-chip">Strategic Thinker</span>
-            <span class="dim-chip">Change Driver</span>
-            <span class="dim-chip">Culture Keeper</span>
-            <span class="dim-chip">Results Driver</span>
+        <div class="lang-toggle">
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" onclick="setLang('es')">ES</button>
         </div>
-        <button class="btn-primary" onclick="startQuiz()">Start Assessment</button>
-        <p class="fine-print">No registration. Instant results. Used by Fortune 500 L&D teams.</p>
+        <div class="tag t" data-en="Research-backed" data-es="Basado en investigacion">Basado en investigacion</div>
+        <h1 class="t" data-en="What Kind of Manager Are You?" data-es="Que Tipo de Manager Eres?">Que Tipo de Manager Eres?</h1>
+        <div class="sub t" data-en="5-minute assessment based on Google's Project Aristotle, Harvard leadership research, and McKinsey's organizational health framework. Discover your management style across 6 dimensions." data-es="Evaluacion de 5 minutos basada en Project Aristotle de Google, investigacion de liderazgo de Harvard y el framework de salud organizacional de McKinsey. Descubre tu estilo de gestion en 6 dimensiones.">Evaluacion de 5 minutos basada en Project Aristotle de Google, investigacion de liderazgo de Harvard y el framework de salud organizacional de McKinsey. Descubre tu estilo de gestion en 6 dimensiones.</div>
+        <div class="dims-grid" id="dimsGrid"></div>
+        <button class="btn-primary t" onclick="startQuiz()" data-en="Start Assessment" data-es="Iniciar Evaluacion">Iniciar Evaluacion</button>
+        <p class="fine-print t" data-en="No registration. Instant results. Used by Fortune 500 L&D teams." data-es="Sin registro. Resultados al instante. Usado por equipos de L&D del Fortune 500.">Sin registro. Resultados al instante. Usado por equipos de L&D del Fortune 500.</p>
     </div>
 </div>
 
@@ -129,7 +129,7 @@
     <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     <div class="question-container" id="questionContainer"></div>
     <div class="submit-area" id="submitArea" style="display:none;">
-        <button class="btn-primary" onclick="submitQuiz()">See My Results</button>
+        <button class="btn-primary t" onclick="submitQuiz()" data-en="See My Results" data-es="Ver Mis Resultados">Ver Mis Resultados</button>
     </div>
 </div>
 
@@ -144,12 +144,12 @@
 // ============================================================
 
 var ARCHETYPES = {
-    PeopleBuilder: { name: 'People Builder', emoji: '&#129309;', color: '#22c55e', quote: 'A leader is best when people barely know he exists. When his work is done, they will say: we did it ourselves.', desc: 'You develop talent. Coaching, delegation, and growing people is your superpower.' },
-    ProcessArchitect: { name: 'Process Architect', emoji: '&#9881;', color: '#60a5fa', quote: 'Every system is perfectly designed to get the results it gets.', desc: 'You build systems that scale. SOPs, workflows, and operational excellence define your approach.' },
-    StrategicThinker: { name: 'Strategic Thinker', emoji: '&#9813;', color: '#a78bfa', quote: 'Strategy is about making choices. It is about deliberately choosing to be different.', desc: 'You see the big picture. Resource allocation, long-term planning, and strategic alignment are your strengths.' },
-    ChangeDriver: { name: 'Change Driver', emoji: '&#9889;', color: '#f59e0b', quote: 'The measure of intelligence is the ability to change.', desc: 'You drive transformation. Adaptability, innovation adoption, and leading through uncertainty define you.' },
-    CultureKeeper: { name: 'Culture Keeper', emoji: '&#127793;', color: '#ec4899', quote: 'Culture eats strategy for breakfast.', desc: 'You create psychological safety. Trust, inclusion, and team dynamics are your foundation.' },
-    ResultsDriver: { name: 'Results Driver', emoji: '&#127919;', color: '#ef4444', quote: 'What gets measured gets managed.', desc: 'You deliver outcomes. Accountability, KPIs, and execution excellence are your trademarks.' }
+    PeopleBuilder: { name: 'People Builder', name_es: 'Constructor de Personas', emoji: '&#129309;', color: '#22c55e', quote: 'A leader is best when people barely know he exists. When his work is done, they will say: we did it ourselves.', quote_es: 'Un lider es mejor cuando la gente apenas sabe que existe. Cuando termina su trabajo, diran: lo hicimos nosotros.', desc: 'You develop talent. Coaching, delegation, and growing people is your superpower.', desc_es: 'Desarrollas talento. El coaching, la delegacion y hacer crecer personas es tu superpoder.' },
+    ProcessArchitect: { name: 'Process Architect', name_es: 'Arquitecto de Procesos', emoji: '&#9881;', color: '#60a5fa', quote: 'Every system is perfectly designed to get the results it gets.', quote_es: 'Cada sistema esta perfectamente disenado para obtener los resultados que obtiene.', desc: 'You build systems that scale. SOPs, workflows, and operational excellence define your approach.', desc_es: 'Construyes sistemas que escalan. SOPs, workflows y excelencia operativa definen tu enfoque.' },
+    StrategicThinker: { name: 'Strategic Thinker', name_es: 'Pensador Estrategico', emoji: '&#9813;', color: '#a78bfa', quote: 'Strategy is about making choices. It is about deliberately choosing to be different.', quote_es: 'La estrategia es sobre tomar decisiones. Es elegir deliberadamente ser diferente.', desc: 'You see the big picture. Resource allocation, long-term planning, and strategic alignment are your strengths.', desc_es: 'Ves el panorama completo. Asignacion de recursos, planeacion a largo plazo y alineacion estrategica son tus fortalezas.' },
+    ChangeDriver: { name: 'Change Driver', name_es: 'Motor de Cambio', emoji: '&#9889;', color: '#f59e0b', quote: 'The measure of intelligence is the ability to change.', quote_es: 'La medida de la inteligencia es la capacidad de cambiar.', desc: 'You drive transformation. Adaptability, innovation adoption, and leading through uncertainty define you.', desc_es: 'Impulsas la transformacion. Adaptabilidad, adopcion de innovacion y liderazgo en la incertidumbre te definen.' },
+    CultureKeeper: { name: 'Culture Keeper', name_es: 'Guardian de Cultura', emoji: '&#127793;', color: '#ec4899', quote: 'Culture eats strategy for breakfast.', quote_es: 'La cultura se come a la estrategia en el desayuno.', desc: 'You create psychological safety. Trust, inclusion, and team dynamics are your foundation.', desc_es: 'Creas seguridad psicologica. Confianza, inclusion y dinamicas de equipo son tu fundamento.' },
+    ResultsDriver: { name: 'Results Driver', name_es: 'Motor de Resultados', emoji: '&#127919;', color: '#ef4444', quote: 'What gets measured gets managed.', quote_es: 'Lo que se mide se gestiona.', desc: 'You deliver outcomes. Accountability, KPIs, and execution excellence are your trademarks.', desc_es: 'Entregas resultados. Responsabilidad, KPIs y excelencia en ejecucion son tu marca.' }
 };
 
 var DIM_COLORS = { PeopleBuilder: '#22c55e', ProcessArchitect: '#60a5fa', StrategicThinker: '#a78bfa', ChangeDriver: '#f59e0b', CultureKeeper: '#ec4899', ResultsDriver: '#ef4444' };
@@ -164,55 +164,84 @@ var FAMOUS = {
 };
 
 var CO_NEED = {
-    PeopleBuilder: { need: 'ResultsDriver', reason: 'You grow people beautifully but need someone who drives hard deadlines and accountability.' },
-    ProcessArchitect: { need: 'ChangeDriver', reason: 'Your systems are excellent but need someone who challenges the status quo and drives innovation.' },
-    StrategicThinker: { need: 'ProcessArchitect', reason: 'Your vision is clear but you need someone to build the operational machinery to execute it.' },
-    ChangeDriver: { need: 'CultureKeeper', reason: 'You drive change fast but need someone who ensures people feel safe during transitions.' },
-    CultureKeeper: { need: 'ResultsDriver', reason: 'Your team loves working for you but you need someone who pushes for measurable outcomes.' },
-    ResultsDriver: { need: 'PeopleBuilder', reason: 'You hit every target but need someone who develops people so they grow, not just perform.' }
+    PeopleBuilder: { need: 'ResultsDriver', reason: 'You grow people beautifully but need someone who drives hard deadlines and accountability.', reason_es: 'Desarrollas personas increiblemente pero necesitas a alguien que impulse deadlines firmes y rendicion de cuentas.' },
+    ProcessArchitect: { need: 'ChangeDriver', reason: 'Your systems are excellent but need someone who challenges the status quo and drives innovation.', reason_es: 'Tus sistemas son excelentes pero necesitas a alguien que desafie el status quo e impulse la innovacion.' },
+    StrategicThinker: { need: 'ProcessArchitect', reason: 'Your vision is clear but you need someone to build the operational machinery to execute it.', reason_es: 'Tu vision es clara pero necesitas a alguien que construya la maquinaria operativa para ejecutarla.' },
+    ChangeDriver: { need: 'CultureKeeper', reason: 'You drive change fast but need someone who ensures people feel safe during transitions.', reason_es: 'Impulsas cambios rapido pero necesitas a alguien que asegure que la gente se sienta segura durante las transiciones.' },
+    CultureKeeper: { need: 'ResultsDriver', reason: 'Your team loves working for you but you need someone who pushes for measurable outcomes.', reason_es: 'Tu equipo ama trabajar contigo pero necesitas a alguien que empuje por resultados medibles.' },
+    ResultsDriver: { need: 'PeopleBuilder', reason: 'You hit every target but need someone who develops people so they grow, not just perform.', reason_es: 'Alcanzas cada meta pero necesitas a alguien que desarrolle personas para que crezcan, no solo rindan.' }
 };
 
 var sections = [
-    { name: 'People Builder', dim: 'PeopleBuilder', emoji: '&#129309;', items: [
-        { text: 'I regularly give specific, actionable feedback to my team members.' },
-        { text: 'I delegate tasks based on each person\'s growth needs, not just efficiency.' },
-        { text: 'I spend time coaching individuals on their career development.' },
-        { text: 'I can identify each team member\'s top 3 strengths and growth areas.' },
+    { name: 'People Builder', name_es: 'Constructor de Personas', dim: 'PeopleBuilder', emoji: '&#129309;', items: [
+        { text: 'I regularly give specific, actionable feedback to my team members.', text_es: 'Regularmente doy retroalimentacion especifica y accionable a mi equipo.' },
+        { text: 'I delegate tasks based on each person\'s growth needs, not just efficiency.', text_es: 'Delego tareas basandome en las necesidades de crecimiento de cada persona, no solo eficiencia.' },
+        { text: 'I spend time coaching individuals on their career development.', text_es: 'Invierto tiempo en coaching individual sobre el desarrollo de carrera.' },
+        { text: 'I can identify each team member\'s top 3 strengths and growth areas.', text_es: 'Puedo identificar las 3 principales fortalezas y areas de crecimiento de cada miembro.' },
     ]},
-    { name: 'Process Architect', dim: 'ProcessArchitect', emoji: '&#9881;', items: [
-        { text: 'I document processes so they work even when I\'m not there.' },
-        { text: 'When something goes wrong, I fix the system, not just the symptom.' },
-        { text: 'I regularly audit our workflows for inefficiencies.' },
-        { text: 'My team has clear SOPs for recurring tasks.' },
+    { name: 'Process Architect', name_es: 'Arquitecto de Procesos', dim: 'ProcessArchitect', emoji: '&#9881;', items: [
+        { text: 'I document processes so they work even when I\'m not there.', text_es: 'Documento procesos para que funcionen incluso cuando no estoy.' },
+        { text: 'When something goes wrong, I fix the system, not just the symptom.', text_es: 'Cuando algo sale mal, arreglo el sistema, no solo el sintoma.' },
+        { text: 'I regularly audit our workflows for inefficiencies.', text_es: 'Regularmente audito nuestros workflows buscando ineficiencias.' },
+        { text: 'My team has clear SOPs for recurring tasks.', text_es: 'Mi equipo tiene SOPs claros para tareas recurrentes.' },
     ]},
-    { name: 'Strategic Thinker', dim: 'StrategicThinker', emoji: '&#9813;', items: [
-        { text: 'I can clearly articulate how my team\'s work connects to company goals.' },
-        { text: 'I proactively reallocate resources when priorities shift.' },
-        { text: 'I anticipate problems 2-3 months before they become urgent.' },
-        { text: 'I say no to good opportunities to focus on great ones.' },
+    { name: 'Strategic Thinker', name_es: 'Pensador Estrategico', dim: 'StrategicThinker', emoji: '&#9813;', items: [
+        { text: 'I can clearly articulate how my team\'s work connects to company goals.', text_es: 'Puedo articular claramente como el trabajo de mi equipo se conecta con los objetivos de la empresa.' },
+        { text: 'I proactively reallocate resources when priorities shift.', text_es: 'Proactivamente reasigno recursos cuando las prioridades cambian.' },
+        { text: 'I anticipate problems 2-3 months before they become urgent.', text_es: 'Anticipo problemas 2-3 meses antes de que se vuelvan urgentes.' },
+        { text: 'I say no to good opportunities to focus on great ones.', text_es: 'Digo no a buenas oportunidades para enfocarme en las excelentes.' },
     ]},
-    { name: 'Change Driver', dim: 'ChangeDriver', emoji: '&#9889;', items: [
-        { text: 'I actively seek new methods and tools to improve how we work.' },
-        { text: 'When a major change is needed, I lead from the front, not behind.' },
-        { text: 'I\'m comfortable making decisions with incomplete information.' },
-        { text: 'I help my team adapt quickly when plans change unexpectedly.' },
+    { name: 'Change Driver', name_es: 'Motor de Cambio', dim: 'ChangeDriver', emoji: '&#9889;', items: [
+        { text: 'I actively seek new methods and tools to improve how we work.', text_es: 'Busco activamente nuevos metodos y herramientas para mejorar como trabajamos.' },
+        { text: 'When a major change is needed, I lead from the front, not behind.', text_es: 'Cuando se necesita un cambio importante, lidero desde el frente, no desde atras.' },
+        { text: 'I\'m comfortable making decisions with incomplete information.', text_es: 'Me siento comodo tomando decisiones con informacion incompleta.' },
+        { text: 'I help my team adapt quickly when plans change unexpectedly.', text_es: 'Ayudo a mi equipo a adaptarse rapido cuando los planes cambian inesperadamente.' },
     ]},
-    { name: 'Culture Keeper', dim: 'CultureKeeper', emoji: '&#127793;', items: [
-        { text: 'My team members feel safe admitting mistakes without fear.' },
-        { text: 'I actively address toxic behavior even when the person is a top performer.' },
-        { text: 'I create space for different perspectives and healthy disagreement.' },
-        { text: 'New team members feel welcomed and integrated within their first week.' },
+    { name: 'Culture Keeper', name_es: 'Guardian de Cultura', dim: 'CultureKeeper', emoji: '&#127793;', items: [
+        { text: 'My team members feel safe admitting mistakes without fear.', text_es: 'Los miembros de mi equipo se sienten seguros admitiendo errores sin miedo.' },
+        { text: 'I actively address toxic behavior even when the person is a top performer.', text_es: 'Activamente abordo comportamiento toxico incluso cuando la persona es top performer.' },
+        { text: 'I create space for different perspectives and healthy disagreement.', text_es: 'Creo espacio para diferentes perspectivas y desacuerdos saludables.' },
+        { text: 'New team members feel welcomed and integrated within their first week.', text_es: 'Los nuevos miembros se sienten bienvenidos e integrados en su primera semana.' },
     ]},
-    { name: 'Results Driver', dim: 'ResultsDriver', emoji: '&#127919;', items: [
-        { text: 'I set clear, measurable goals with specific deadlines for my team.' },
-        { text: 'I hold people accountable when they miss commitments.' },
-        { text: 'I track key metrics weekly and act on negative trends immediately.' },
-        { text: 'I prioritize ruthlessly -- my team always knows the top 3 priorities.' },
+    { name: 'Results Driver', name_es: 'Motor de Resultados', dim: 'ResultsDriver', emoji: '&#127919;', items: [
+        { text: 'I set clear, measurable goals with specific deadlines for my team.', text_es: 'Establezco metas claras y medibles con deadlines especificos para mi equipo.' },
+        { text: 'I hold people accountable when they miss commitments.', text_es: 'Hago responsable a la gente cuando no cumplen compromisos.' },
+        { text: 'I track key metrics weekly and act on negative trends immediately.', text_es: 'Rastreo metricas clave semanalmente y actuo ante tendencias negativas de inmediato.' },
+        { text: 'I prioritize ruthlessly -- my team always knows the top 3 priorities.', text_es: 'Priorizo sin piedad -- mi equipo siempre sabe las 3 prioridades principales.' },
     ]},
 ];
 
+var currentLang = localStorage.getItem('ops_lang') || 'es';
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ops_lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.lang-btn').forEach(function(b) {
+        if (b.textContent.trim() === lang.toUpperCase()) b.classList.add('active');
+    });
+    document.querySelectorAll('.t').forEach(function(el) {
+        var text = el.getAttribute('data-' + lang);
+        if (text) el.innerHTML = text;
+        var ph = el.getAttribute('data-' + lang + '-placeholder');
+        if (ph) el.placeholder = ph;
+    });
+    renderDimChips();
+}
+
+function T(en, es) { return currentLang === 'es' ? es : en; }
+function archName(key) { var a = ARCHETYPES[key]; return currentLang === 'es' ? (a.name_es || a.name) : a.name; }
+function archQuote(key) { var a = ARCHETYPES[key]; return currentLang === 'es' ? (a.quote_es || a.quote) : a.quote; }
+function archDesc(key) { var a = ARCHETYPES[key]; return currentLang === 'es' ? (a.desc_es || a.desc) : a.desc; }
+
+function renderDimChips() {
+    var g = document.getElementById('dimsGrid');
+    if (!g) return;
+    g.innerHTML = Object.keys(ARCHETYPES).map(function(k) { return '<span class="dim-chip">' + archName(k) + '</span>'; }).join('');
+}
+
 var allItems = [];
-sections.forEach(function(s) { s.items.forEach(function(item) { allItems.push({ text: item.text, dim: s.dim }); }); });
+sections.forEach(function(s) { s.items.forEach(function(item) { allItems.push({ text: item.text, text_es: item.text_es, dim: s.dim }); }); });
 
 // ============================================================
 // STATE
@@ -220,6 +249,8 @@ sections.forEach(function(s) { s.items.forEach(function(item) { allItems.push({ 
 var userEmail = '';
 var answers = {};
 var globalScores = {};
+
+setLang(currentLang);
 
 // ============================================================
 // FLOW
@@ -237,11 +268,15 @@ function renderQuestions() {
     var container = document.getElementById('questionContainer');
     var html = '';
     var globalIdx = 0;
+    var labelsEn = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+    var labelsEs = ['Muy en desacuerdo', 'En desacuerdo', 'Neutral', 'De acuerdo', 'Muy de acuerdo'];
+    var labels = currentLang === 'es' ? labelsEs : labelsEn;
     sections.forEach(function(section) {
-        html += '<div class="section-divider"><h3>' + section.emoji + ' ' + section.name + '</h3></div>';
+        var sName = currentLang === 'es' ? (section.name_es || section.name) : section.name;
+        html += '<div class="section-divider"><h3>' + section.emoji + ' ' + sName + '</h3></div>';
         section.items.forEach(function(item) {
-            html += '<div class="q-card"><div class="q-text">' + item.text + '</div><div class="likert">';
-            var labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+            var qText = currentLang === 'es' ? (item.text_es || item.text) : item.text;
+            html += '<div class="q-card"><div class="q-text">' + qText + '</div><div class="likert">';
             for (var v = 1; v <= 5; v++) {
                 html += '<label><input type="radio" name="q' + globalIdx + '" value="' + v + '" onchange="recordAnswer(' + globalIdx + ',' + v + ')"><span class="circle"></span><span class="label-text">' + labels[v-1] + '</span></label>';
             }
@@ -283,7 +318,7 @@ function scoreSection(dim) {
 
 async function submitQuiz() {
     if (Object.keys(answers).length < allItems.length) {
-        alert('Please answer all questions before continuing.');
+        alert(T('Please answer all questions before continuing.', 'Por favor responde todas las preguntas antes de continuar.'));
         return;
     }
 
@@ -319,70 +354,74 @@ function showResults(scores, sorted, primary, secondary, weakest, famousMatch) {
     rs.style.display = 'flex';
 
     var pData = ARCHETYPES[primary];
+    var pName = archName(primary);
     var radarSVG = buildRadar(scores);
 
     var dimBarsHTML = '';
     sorted.forEach(function(entry) {
         var d = entry[0], pct = entry[1];
-        dimBarsHTML += '<div class="dim-bar-container"><div class="dim-label"><span class="name">' + ARCHETYPES[d].name + '</span><span class="score">' + pct + '%</span></div>' +
+        dimBarsHTML += '<div class="dim-bar-container"><div class="dim-label"><span class="name">' + archName(d) + '</span><span class="score">' + pct + '%</span></div>' +
             '<div class="dim-bar-bg"><div class="dim-bar" data-score="' + pct + '" style="background:' + DIM_COLORS[d] + ';"></div></div></div>';
     });
 
-    var top2 = sorted.slice(0, 2).map(function(e) { return ARCHETYPES[e[0]].name; });
-    var bottom2 = sorted.slice(-2).map(function(e) { return ARCHETYPES[e[0]].name; });
-    var strengthsHTML = '<div class="strength-item"><strong>Top strengths:</strong> ' + top2.join(', ') + '</div>';
-    var growthHTML = '<div class="strength-item"><strong>Growth areas:</strong> ' + bottom2.join(', ') + '</div>';
+    var top2 = sorted.slice(0, 2).map(function(e) { return archName(e[0]); });
+    var bottom2 = sorted.slice(-2).map(function(e) { return archName(e[0]); });
+    var strengthsHTML = '<div class="strength-item"><strong>' + T('Top strengths:', 'Fortalezas principales:') + '</strong> ' + top2.join(', ') + '</div>';
+    var growthHTML = '<div class="strength-item"><strong>' + T('Growth areas:', 'Areas de crecimiento:') + '</strong> ' + bottom2.join(', ') + '</div>';
 
     var coNeed = CO_NEED[primary];
-    var shareText = "I'm a " + pData.name + " manager like " + famousMatch + "! What kind of manager are you? ";
+    var coNeedReason = currentLang === 'es' ? (coNeed.reason_es || coNeed.reason) : coNeed.reason;
+    var shareText = currentLang === 'es'
+        ? "Soy un manager tipo " + pName + " como " + famousMatch + "! Que tipo de manager eres? "
+        : "I'm a " + pName + " manager like " + famousMatch + "! What kind of manager are you? ";
 
     var container = document.getElementById('resultsContainer');
     container.innerHTML =
         '<div class="section-card"><div class="archetype-header">' +
             '<div class="archetype-emoji">' + pData.emoji + '</div>' +
-            '<div class="archetype-title" style="color:' + pData.color + '">' + pData.name + '</div>' +
-            '<div class="archetype-quote">"' + pData.quote + '"</div>' +
-            '<p style="margin-top:12px;font-size:0.9rem;color:#94a3b8;">' + pData.desc + '</p>' +
+            '<div class="archetype-title" style="color:' + pData.color + '">' + pName + '</div>' +
+            '<div class="archetype-quote">"' + archQuote(primary) + '"</div>' +
+            '<p style="margin-top:12px;font-size:0.9rem;color:#94a3b8;">' + archDesc(primary) + '</p>' +
         '</div></div>' +
 
-        '<div class="section-card"><h2>Your Management Profile</h2>' +
+        '<div class="section-card"><h2>' + T('Your Management Profile', 'Tu Perfil de Gestion') + '</h2>' +
             '<div class="radar-wrap">' + radarSVG + '</div>' + dimBarsHTML + '</div>' +
 
-        '<div class="section-card"><h3>Famous Match: ' + famousMatch + '</h3>' +
-            '<p style="font-size:0.85rem;color:#94a3b8;">Based on your scores, you share the most similar management DNA with <strong>' + famousMatch + '</strong>.</p></div>' +
+        '<div class="section-card"><h3>' + T('Famous Match: ', 'Match Famoso: ') + famousMatch + '</h3>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;">' + T('Based on your scores, you share the most similar management DNA with <strong>' + famousMatch + '</strong>.', 'Basado en tus puntuaciones, compartes el ADN de gestion mas similar con <strong>' + famousMatch + '</strong>.') + '</p></div>' +
 
         '<div class="section-card">' + strengthsHTML + growthHTML + '</div>' +
 
-        '<div class="section-card"><h3>Your Ideal Co-Manager</h3>' +
-            '<p style="font-size:0.85rem;color:#94a3b8;">You need a <strong>' + ARCHETYPES[coNeed.need].name + '</strong>. ' + coNeed.reason + '</p></div>' +
+        '<div class="section-card"><h3>' + T('Your Ideal Co-Manager', 'Tu Co-Manager Ideal') + '</h3>' +
+            '<p style="font-size:0.85rem;color:#94a3b8;">' + T('You need a', 'Necesitas un') + ' <strong>' + archName(coNeed.need) + '</strong>. ' + coNeedReason + '</p></div>' +
 
-        '<div class="section-card ai-section"><h2>AI Analysis</h2>' +
-            '<div class="ai-narrative" id="aiNarrative"><p class="loading">Generating your personalized analysis...</p></div></div>' +
+        '<div class="section-card ai-section"><h2>' + T('AI Analysis', 'Analisis IA') + '</h2>' +
+            '<div class="ai-narrative" id="aiNarrative"><p class="loading">' + T('Generating your personalized analysis...', 'Generando tu analisis personalizado...') + '</p></div></div>' +
 
-        '<div class="section-card"><h2>AI Leadership Coach</h2>' +
-            '<div style="display:flex;gap:8px;"><input type="text" id="coachQuestion" placeholder="Ask about leadership, teams, delegation..." style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;outline:none;">' +
-            '<button onclick="askCoach()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Ask</button></div>' +
+        '<div class="section-card"><h2>' + T('AI Leadership Coach', 'Coach de Liderazgo IA') + '</h2>' +
+            '<div style="display:flex;gap:8px;"><input type="text" id="coachQuestion" placeholder="' + T('Ask about leadership, teams, delegation...', 'Pregunta sobre liderazgo, equipos, delegacion...') + '" style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;outline:none;">' +
+            '<button onclick="askCoach()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">' + T('Ask', 'Preguntar') + '</button></div>' +
             '<div id="coachResponse" style="margin-top:12px;font-size:0.85rem;color:#94a3b8;line-height:1.6;"></div></div>' +
 
         '<div class="section-card"><div class="share-section">' +
-            '<p>Share your management profile</p>' +
+            '<p>' + T('Share your management profile', 'Comparte tu perfil de gestion') + '</p>' +
             '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">' +
                 '<a href="https://wa.me/?text=' + encodeURIComponent(shareText + window.location.origin) + '" target="_blank" style="padding:10px 20px;background:#25D366;color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;">WhatsApp</a>' +
-                '<button class="btn-share" id="shareBtn">Copy link</button>' +
-            '</div><button class="btn-retake" onclick="window.location.reload()">Retake Assessment</button></div></div>' +
+                '<button class="btn-share" id="shareBtn">' + T('Copy link', 'Copiar enlace') + '</button>' +
+            '</div><button class="btn-retake" onclick="window.location.reload()">' + T('Retake Assessment', 'Repetir Evaluacion') + '</button></div></div>' +
 
         '<div class="section-card"><div style="text-align:center;">' +
-            '<p style="font-size:1rem;font-weight:600;margin-bottom:4px;">Save your results</p>' +
-            '<p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">Get your full leadership report with growth plan</p>' +
+            '<p style="font-size:1rem;font-weight:600;margin-bottom:4px;">' + T('Save your results', 'Guarda tus resultados') + '</p>' +
+            '<p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">' + T('Get your full leadership report with growth plan', 'Recibe tu reporte completo de liderazgo con plan de crecimiento') + '</p>' +
             '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
-                '<input type="email" id="postEmail" placeholder="you@email.com" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;">' +
-                '<button onclick="saveEmailPost()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Save</button></div>' +
+                '<input type="email" id="postEmail" placeholder="' + T('you@email.com', 'tu@email.com') + '" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;">' +
+                '<button onclick="saveEmailPost()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">' + T('Save', 'Guardar') + '</button></div>' +
             '<div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>' +
 
         '<div class="section-card" style="text-align:center;">' +
-            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:8px;">Want to discover more through gameplay?</p>' +
-            '<a href="/games" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">Play the Manager Games</a>' +
-            '<br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">Start the Academy</a></div>';
+            '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:8px;">' + T('Want to discover more through gameplay?', 'Quieres descubrir mas a traves de juegos?') + '</p>' +
+            '<a href="/games" style="display:inline-block;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #3b82f6;border-radius:8px;text-decoration:none;font-weight:600;">' + T('Play the Manager Games', 'Jugar los Juegos de Manager') + '</a>' +
+            '<br><a href="/academy" style="display:inline-block;margin-top:8px;padding:10px 24px;background:transparent;color:#3b82f6;border:1px solid #334155;border-radius:8px;text-decoration:none;font-weight:600;">' + T('Start the Academy', 'Iniciar la Academia') + '</a></div>';
 
     // Animate bars
     setTimeout(function() { document.querySelectorAll('.dim-bar').forEach(function(bar) { bar.style.width = bar.dataset.score + '%'; }); }, 300);
@@ -396,29 +435,29 @@ function showResults(scores, sorted, primary, secondary, weakest, famousMatch) {
     });
 
     // AI narrative
-    fetch('/api/ai/narrative', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: scores}) })
+    fetch('/api/ai/narrative', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: scores, language: currentLang}) })
         .then(function(r) { return r.json(); })
-        .then(function(d) { document.getElementById('aiNarrative').innerHTML = '<p>' + (d.narrative || 'AI unavailable.').replace(/\n/g, '</p><p>') + '</p>'; })
-        .catch(function() { document.getElementById('aiNarrative').innerHTML = '<p>AI analysis unavailable.</p>'; });
+        .then(function(d) { document.getElementById('aiNarrative').innerHTML = '<p>' + (d.narrative || T('AI unavailable.', 'IA no disponible.')).replace(/\n/g, '</p><p>') + '</p>'; })
+        .catch(function() { document.getElementById('aiNarrative').innerHTML = '<p>' + T('AI analysis unavailable.', 'Analisis de IA no disponible.') + '</p>'; });
 }
 
 async function askCoach() {
     var q = document.getElementById('coachQuestion').value.trim();
     if (!q) return;
-    document.getElementById('coachResponse').innerHTML = '<em>Thinking...</em>';
+    document.getElementById('coachResponse').innerHTML = '<em>' + T('Thinking...', 'Pensando...') + '</em>';
     try {
-        var r = await fetch('/api/ai/coach', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: globalScores, question: q}) });
+        var r = await fetch('/api/ai/coach', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores: globalScores, question: q, language: currentLang}) });
         var d = await r.json();
-        document.getElementById('coachResponse').textContent = d.answer || 'No response.';
-    } catch(e) { document.getElementById('coachResponse').textContent = 'Coach unavailable.'; }
+        document.getElementById('coachResponse').textContent = d.answer || T('No response.', 'Sin respuesta.');
+    } catch(e) { document.getElementById('coachResponse').textContent = T('Coach unavailable.', 'Coach no disponible.'); }
 }
 
 async function saveEmailPost() {
     var email = document.getElementById('postEmail').value.trim().toLowerCase();
-    if (!email || !email.includes('@')) { alert('Please enter a valid email'); return; }
+    if (!email || !email.includes('@')) { alert(T('Please enter a valid email', 'Por favor ingresa un email valido')); return; }
     userEmail = email;
     try { await fetch('/api/manager-profile', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email: email, scores: globalScores, timestamp: new Date().toISOString()}) }); } catch(e) {}
-    document.getElementById('saveMsg').textContent = 'Results saved!';
+    document.getElementById('saveMsg').textContent = T('Results saved!', 'Resultados guardados!');
     document.getElementById('saveMsg').style.display = 'block';
     document.getElementById('postEmail').disabled = true;
 }
@@ -460,7 +499,7 @@ function buildRadar(scores) {
         var anchor = 'middle';
         if (p.x < cx - 10) anchor = 'end';
         else if (p.x > cx + 10) anchor = 'start';
-        var shortName = ARCHETYPES[d].name.split(' ')[0];
+        var shortName = archName(d).split(' ')[0];
         labelsHTML += '<text x="' + p.x + '" y="' + p.y + '" text-anchor="' + anchor + '" dominant-baseline="central" class="label-text" fill="' + colors[d] + '">' + shortName + '</text>';
         labelsHTML += '<text x="' + p.x + '" y="' + (p.y + 13) + '" text-anchor="' + anchor + '" dominant-baseline="central" class="score-text">' + scores[d] + '%</text>';
     });
