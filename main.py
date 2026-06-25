@@ -26,10 +26,15 @@ HEADERS = {
 }
 
 async def save_to_supabase(table, data):
-    if not SUPABASE_KEY: return {}
+    if not SUPABASE_KEY:
+        print(f"[OPS] CRITICAL: SUPABASE_KEY not set! Data for {table} LOST: {json.dumps(data)[:200]}")
+        return {}
     async with httpx.AsyncClient() as c:
         r = await c.post(f"{SUPABASE_URL}/rest/v1/{table}", headers=HEADERS, json=data)
-        if r.status_code not in [200, 201]: print(f"Supabase error: {r.text}")
+        if r.status_code not in [200, 201]:
+            print(f"[OPS] Supabase POST {table} FAILED ({r.status_code}): {r.text}")
+        else:
+            print(f"[OPS] Saved to {table}: {data.get('email', 'anon')}")
         return r.json() if r.status_code in [200, 201] else {}
 
 VALID_DIMS = {"PeopleBuilder", "ProcessArchitect", "StrategicThinker",
@@ -86,8 +91,9 @@ async def academy():
 
 @app.post("/api/manager-profile")
 async def save_profile(data: dict):
-    try: await save_to_supabase("manager_profiles", data)
-    except Exception as e: print(f"Error: {e}")
+    result = await save_to_supabase("manager_profiles", data)
+    if not result:
+        raise HTTPException(500, "Failed to save profile")
     return {"status": "ok"}
 
 @app.get("/api/manager-profile/results")
