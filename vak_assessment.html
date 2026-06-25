@@ -59,6 +59,10 @@
         .wa-btn { background: #25D366; color: white; }
         .copy-btn { background: #334155; color: #e2e8f0; border: 1px solid #3b82f6 !important; }
 
+        .lang-toggle { display: flex; gap: 2px; background: #0f172a; border-radius: 8px; padding: 3px; margin-bottom: 16px; justify-content: center; }
+        .lang-btn { padding: 6px 16px; border-radius: 6px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b; transition: all 0.2s; }
+        .lang-btn.active { background: #3b82f6; color: white; }
+
         @media (max-width: 600px) { .card { padding: 28px 20px; } .card h1 { font-size: 1.3rem; } }
     </style>
 </head>
@@ -66,15 +70,19 @@
 
 <div class="screen active" id="landingScreen">
     <div class="card">
-        <h1>How Do You Process the World?</h1>
-        <p>18 real-life scenarios reveal your dominant representational system -- Visual, Auditory, or Kinesthetic. Combined with a quick DISC behavioral check for a complete communication profile.</p>
+        <div class="lang-toggle">
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        </div>
+        <h1 class="t" data-en="How Do You Process the World?" data-es="Como Procesas el Mundo?">Como Procesas el Mundo?</h1>
+        <p class="t" data-en="18 real-life scenarios reveal your dominant representational system -- Visual, Auditory, or Kinesthetic. Combined with a quick DISC behavioral check for a complete communication profile." data-es="18 escenarios de la vida real revelan tu sistema representacional dominante -- Visual, Auditivo o Kinestesico. Combinado con una verificacion rapida DISC para un perfil de comunicacion completo.">18 escenarios de la vida real revelan tu sistema representacional dominante -- Visual, Auditivo o Kinestesico. Combinado con una verificacion rapida DISC para un perfil de comunicacion completo.</p>
         <div class="modality-chips">
             <span class="modality-chip chip-v">Visual</span>
-            <span class="modality-chip chip-a">Auditory</span>
-            <span class="modality-chip chip-k">Kinesthetic</span>
+            <span class="modality-chip chip-a t" data-en="Auditory" data-es="Auditivo">Auditivo</span>
+            <span class="modality-chip chip-k t" data-en="Kinesthetic" data-es="Kinestesico">Kinestesico</span>
         </div>
-        <button class="btn-primary" onclick="startQuiz()">Start Assessment</button>
-        <p class="fine-print">No registration. Instant results. ~5 minutes.</p>
+        <button class="btn-primary t" data-en="Start Assessment" data-es="Iniciar Evaluacion" onclick="startQuiz()">Iniciar Evaluacion</button>
+        <p class="fine-print t" data-en="No registration. Instant results. ~5 minutes." data-es="Sin registro. Resultados instantaneos. ~5 minutos.">Sin registro. Resultados instantaneos. ~5 minutos.</p>
     </div>
 </div>
 
@@ -92,54 +100,65 @@
 </div>
 
 <script>
+var currentLang = localStorage.getItem('ops_lang') || 'es';
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ops_lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.lang-btn').forEach(function(b) { if (b.textContent.trim() === lang.toUpperCase()) b.classList.add('active'); });
+    document.querySelectorAll('.t').forEach(function(el) { var text = el.getAttribute('data-' + lang); if (text) el.innerHTML = text; });
+}
+function T(en, es) { return currentLang === 'es' ? es : en; }
+setLang(currentLang);
+
 var SCENARIOS = [
-    { title: "Learning a New Software Tool", context: "Your company adopts a new project management tool. How do you prefer to learn it?",
+    { title: "Learning a New Software Tool", title_es: "Aprendiendo una Nueva Herramienta", context: "Your company adopts a new project management tool. How do you prefer to learn it?", context_es: "Tu empresa adopta una nueva herramienta de gestion de proyectos. Como prefieres aprenderla?",
       options: [
-        { text: "Watch a video tutorial or look at screenshots of the interface", mod: "V" },
-        { text: "Join a live walkthrough where someone explains each feature verbally", mod: "A" },
-        { text: "Jump in and start clicking around -- learn by doing", mod: "K" },
+        { text: "Watch a video tutorial or look at screenshots of the interface", text_es: "Ver un video tutorial o mirar capturas de pantalla de la interfaz", mod: "V" },
+        { text: "Join a live walkthrough where someone explains each feature verbally", text_es: "Unirme a una demostracion en vivo donde alguien explique cada funcion verbalmente", mod: "A" },
+        { text: "Jump in and start clicking around -- learn by doing", text_es: "Meterme directo y empezar a hacer clic -- aprender haciendo", mod: "K" },
     ]},
-    { title: "Remembering a Meeting", context: "You need to recall what was discussed in yesterday's meeting. What comes to mind first?",
+    { title: "Remembering a Meeting", title_es: "Recordando una Reunion", context: "You need to recall what was discussed in yesterday's meeting. What comes to mind first?", context_es: "Necesitas recordar lo que se discutio en la reunion de ayer. Que te viene a la mente primero?",
       options: [
-        { text: "I see the whiteboard notes, slides, or people's faces in my mind", mod: "V" },
-        { text: "I hear specific phrases people said, the tone of voice, the discussions", mod: "A" },
-        { text: "I remember the energy in the room, how I felt about the decisions", mod: "K" },
+        { text: "I see the whiteboard notes, slides, or people's faces in my mind", text_es: "Veo las notas del pizarron, las diapositivas o las caras de las personas en mi mente", mod: "V" },
+        { text: "I hear specific phrases people said, the tone of voice, the discussions", text_es: "Escucho frases especificas que dijeron, el tono de voz, las discusiones", mod: "A" },
+        { text: "I remember the energy in the room, how I felt about the decisions", text_es: "Recuerdo la energia del salon, como me senti respecto a las decisiones", mod: "K" },
     ]},
-    { title: "Giving Directions", context: "A new employee asks you how to get to the conference room. You...",
+    { title: "Giving Directions", title_es: "Dando Indicaciones", context: "A new employee asks you how to get to the conference room. You...", context_es: "Un nuevo empleado te pregunta como llegar a la sala de juntas. Tu...",
       options: [
-        { text: "Draw a quick map or point out landmarks they can see", mod: "V" },
-        { text: "Describe the route step by step verbally: 'Go left, then past the kitchen...'", mod: "A" },
-        { text: "Say 'Follow me, I'll walk you there' and physically guide them", mod: "K" },
+        { text: "Draw a quick map or point out landmarks they can see", text_es: "Dibujas un mapa rapido o senialas puntos de referencia que puedan ver", mod: "V" },
+        { text: "Describe the route step by step verbally: 'Go left, then past the kitchen...'", text_es: "Describes la ruta paso a paso verbalmente: 'Ve a la izquierda, luego pasa la cocina...'", mod: "A" },
+        { text: "Say 'Follow me, I'll walk you there' and physically guide them", text_es: "Dices 'Sigueme, te llevo' y los guias fisicamente", mod: "K" },
     ]},
-    { title: "Buying a New Phone", context: "You're deciding which phone to buy. What matters most?",
+    { title: "Buying a New Phone", title_es: "Comprando un Telefono Nuevo", context: "You're deciding which phone to buy. What matters most?", context_es: "Estas decidiendo que telefono comprar. Que te importa mas?",
       options: [
-        { text: "How it looks -- the design, screen quality, color options", mod: "V" },
-        { text: "Reviews and recommendations -- what people say about it", mod: "A" },
-        { text: "How it feels in your hand -- the weight, texture, button feedback", mod: "K" },
+        { text: "How it looks -- the design, screen quality, color options", text_es: "Como se ve -- el disenioo, calidad de pantalla, opciones de color", mod: "V" },
+        { text: "Reviews and recommendations -- what people say about it", text_es: "Resenioas y recomendaciones -- lo que la gente dice de el", mod: "A" },
+        { text: "How it feels in your hand -- the weight, texture, button feedback", text_es: "Como se siente en tu mano -- el peso, textura, respuesta de los botones", mod: "K" },
     ]},
-    { title: "Stressed at Work", context: "You're overwhelmed with deadlines. To decompress, you...",
+    { title: "Stressed at Work", title_es: "Estresado en el Trabajo", context: "You're overwhelmed with deadlines. To decompress, you...", context_es: "Estas abrumado con fechas de entrega. Para descomprimirte, tu...",
       options: [
-        { text: "Watch something -- a show, YouTube, or just stare out the window", mod: "V" },
-        { text: "Talk to someone about it, listen to music or a podcast", mod: "A" },
-        { text: "Go for a walk, exercise, or do something physical", mod: "K" },
+        { text: "Watch something -- a show, YouTube, or just stare out the window", text_es: "Ves algo -- una serie, YouTube, o simplemente miras por la ventana", mod: "V" },
+        { text: "Talk to someone about it, listen to music or a podcast", text_es: "Hablas con alguien al respecto, escuchas musica o un podcast", mod: "A" },
+        { text: "Go for a walk, exercise, or do something physical", text_es: "Sales a caminar, haces ejercicio o algo fisico", mod: "K" },
     ]},
-    { title: "Presenting to the Team", context: "You're preparing a presentation for your team. Your instinct is to...",
+    { title: "Presenting to the Team", title_es: "Presentando al Equipo", context: "You're preparing a presentation for your team. Your instinct is to...", context_es: "Estas preparando una presentacion para tu equipo. Tu instinto es...",
       options: [
-        { text: "Create detailed slides with charts, images, and visual data", mod: "V" },
-        { text: "Plan what you'll SAY -- the narrative, the stories, the verbal flow", mod: "A" },
-        { text: "Prepare a demo or hands-on activity so they can experience it", mod: "K" },
+        { text: "Create detailed slides with charts, images, and visual data", text_es: "Crear diapositivas detalladas con graficas, imagenes y datos visuales", mod: "V" },
+        { text: "Plan what you'll SAY -- the narrative, the stories, the verbal flow", text_es: "Planear lo que VAS A DECIR -- la narrativa, las historias, el flujo verbal", mod: "A" },
+        { text: "Prepare a demo or hands-on activity so they can experience it", text_es: "Preparar una demo o actividad practica para que lo experimenten", mod: "K" },
     ]},
-    { title: "Resolving a Conflict", context: "Two team members are in a disagreement. Your approach is to...",
+    { title: "Resolving a Conflict", title_es: "Resolviendo un Conflicto", context: "Two team members are in a disagreement. Your approach is to...", context_es: "Dos miembros del equipo estan en desacuerdo. Tu enfoque es...",
       options: [
-        { text: "Write it down -- create a shared document showing both perspectives clearly", mod: "V" },
-        { text: "Get them in a room to talk it out face-to-face", mod: "A" },
-        { text: "Have them work on a joint task together -- shared experience builds connection", mod: "K" },
+        { text: "Write it down -- create a shared document showing both perspectives clearly", text_es: "Escribirlo -- crear un documento compartido mostrando ambas perspectivas claramente", mod: "V" },
+        { text: "Get them in a room to talk it out face-to-face", text_es: "Reunirlos en una sala para hablarlo cara a cara", mod: "A" },
+        { text: "Have them work on a joint task together -- shared experience builds connection", text_es: "Ponerlos a trabajar en una tarea juntos -- la experiencia compartida crea conexion", mod: "K" },
     ]},
-    { title: "Reading a Report", context: "You receive a 20-page quarterly report. You...",
+    { title: "Reading a Report", title_es: "Leyendo un Reporte", context: "You receive a 20-page quarterly report. You...", context_es: "Recibes un reporte trimestral de 20 paginas. Tu...",
       options: [
-        { text: "Scan for charts, graphs, and highlighted sections first", mod: "V" },
-        { text: "Wish someone would just tell you the key points verbally", mod: "A" },
-        { text: "Print it out so you can mark it up, highlight, and flip through physically", mod: "K" },
+        { text: "Scan for charts, graphs, and highlighted sections first", text_es: "Buscas primero las graficas, diagramas y secciones resaltadas", mod: "V" },
+        { text: "Wish someone would just tell you the key points verbally", text_es: "Deseas que alguien simplemente te diga los puntos clave verbalmente", mod: "A" },
+        { text: "Print it out so you can mark it up, highlight, and flip through physically", text_es: "Lo imprimes para poder marcarlo, subrayarlo y hojearlo fisicamente", mod: "K" },
     ]},
     { title: "Onboarding a New Hire", context: "You're onboarding someone to your team. Your first instinct is to...",
       options: [

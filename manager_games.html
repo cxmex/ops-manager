@@ -50,6 +50,9 @@
         .transition.active { display: flex; }
         .transition .emoji { font-size: 4rem; margin-bottom: 16px; }
         .transition .countdown { font-size: 2rem; font-weight: 700; color: #3b82f6; }
+        .lang-toggle { display: flex; gap: 2px; background: #0f172a; border-radius: 8px; padding: 3px; margin-bottom: 16px; justify-content: center; }
+        .lang-btn { padding: 6px 16px; border-radius: 6px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b; transition: all 0.2s; }
+        .lang-btn.active { background: #3b82f6; color: white; }
         @media (max-width: 600px) { .card { padding: 24px 16px; } .slider-row .label { width: 80px; font-size: 0.75rem; } }
     </style>
 </head>
@@ -57,15 +60,19 @@
 
 <div class="screen active" id="landingScreen">
     <div class="card">
-        <h1>Manager Games</h1>
-        <p>3 mini-games that reveal your leadership style through decisions, not self-report. Takes ~5 minutes.</p>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
-            <span style="padding:4px 12px;background:#0f2e0f;color:#22c55e;border-radius:20px;font-size:0.75rem;">Delegation</span>
-            <span style="padding:4px 12px;background:#2a1a0a;color:#f59e0b;border-radius:20px;font-size:0.75rem;">Crisis Management</span>
-            <span style="padding:4px 12px;background:#1a1a2e;color:#a78bfa;border-radius:20px;font-size:0.75rem;">Team Building</span>
+        <div class="lang-toggle">
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" onclick="setLang('es')">ES</button>
         </div>
-        <button class="btn btn-primary" onclick="startGames()">Play Now</button>
-        <p style="font-size:0.75rem;color:#64748b;margin-top:12px;">No registration. Instant results.</p>
+        <h1 class="t" data-en="Manager Games" data-es="Juegos de Manager">Juegos de Manager</h1>
+        <p class="t" data-en="3 mini-games that reveal your leadership style through decisions, not self-report. Takes ~5 minutes." data-es="3 mini-juegos que revelan tu estilo de liderazgo a traves de decisiones, no autoevaluacion. Toma ~5 minutos.">3 mini-juegos que revelan tu estilo de liderazgo a traves de decisiones, no autoevaluacion. Toma ~5 minutos.</p>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
+            <span class="t" style="padding:4px 12px;background:#0f2e0f;color:#22c55e;border-radius:20px;font-size:0.75rem;" data-en="Delegation" data-es="Delegacion">Delegacion</span>
+            <span class="t" style="padding:4px 12px;background:#2a1a0a;color:#f59e0b;border-radius:20px;font-size:0.75rem;" data-en="Crisis Management" data-es="Manejo de Crisis">Manejo de Crisis</span>
+            <span class="t" style="padding:4px 12px;background:#1a1a2e;color:#a78bfa;border-radius:20px;font-size:0.75rem;" data-en="Team Building" data-es="Construccion de Equipo">Construccion de Equipo</span>
+        </div>
+        <button class="btn btn-primary t" onclick="startGames()" data-en="Play Now" data-es="Jugar Ahora">Jugar Ahora</button>
+        <p class="t" style="font-size:0.75rem;color:#64748b;margin-top:12px;" data-en="No registration. Instant results." data-es="Sin registro. Resultados al instante.">Sin registro. Resultados al instante.</p>
     </div>
 </div>
 
@@ -77,19 +84,19 @@
 </div>
 
 <div class="screen" id="game1Screen">
-    <div class="game-header"><span class="label" id="g1Label">Game 1: Delegation</span><span class="timer" id="g1Timer">0:00</span></div>
+    <div class="game-header"><span class="label" id="g1Label"></span><span class="timer" id="g1Timer">0:00</span></div>
     <div class="progress-bar"><div class="progress-fill" id="g1Progress" style="width:0%"></div></div>
     <div id="g1Area"></div>
 </div>
 
 <div class="screen" id="game2Screen">
-    <div class="game-header"><span class="label">Game 2: Crisis Management</span><span class="timer" id="g2Timer">0:00</span></div>
+    <div class="game-header"><span class="label" id="g2Label"></span><span class="timer" id="g2Timer">0:00</span></div>
     <div class="progress-bar"><div class="progress-fill" id="g2Progress" style="width:0%"></div></div>
     <div id="g2Area"></div>
 </div>
 
 <div class="screen" id="game3Screen">
-    <div class="game-header"><span class="label">Game 3: Team Building</span><span class="timer" id="g3Timer">0:00</span></div>
+    <div class="game-header"><span class="label" id="g3Label"></span><span class="timer" id="g3Timer">0:00</span></div>
     <div class="progress-bar"><div class="progress-fill" id="g3Progress" style="width:0%"></div></div>
     <div id="g3Area"></div>
 </div>
@@ -99,29 +106,48 @@
 </div>
 
 <script>
+var currentLang = localStorage.getItem('ops_lang') || 'es';
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ops_lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.lang-btn').forEach(function(b) {
+        if (b.textContent.trim() === lang.toUpperCase()) b.classList.add('active');
+    });
+    document.querySelectorAll('.t').forEach(function(el) {
+        var text = el.getAttribute('data-' + lang);
+        if (text) el.innerHTML = text;
+    });
+}
+
+function T(en, es) { return currentLang === 'es' ? es : en; }
+
+setLang(currentLang);
+
 var DELEGATION = [
-    { title: "Project Deadline in 3 Days", context: "A critical project is due Friday. You have 4 team members. How do you handle it?",
+    { title: "Project Deadline in 3 Days", title_es: "Deadline del Proyecto en 3 Dias", context: "A critical project is due Friday. You have 4 team members. How do you handle it?", context_es: "Un proyecto critico se entrega el viernes. Tienes 4 miembros en tu equipo. Como lo manejas?",
       options: [
-        { text: "Assign specific tasks to each person based on their strengths, check in daily", dims: {PeopleBuilder:2, ProcessArchitect:2, ResultsDriver:1} },
-        { text: "Do the most critical parts yourself, delegate the rest", dims: {ResultsDriver:3, ChangeDriver:1} },
-        { text: "Call a team meeting, explain the situation, and let the team self-organize", dims: {CultureKeeper:2, PeopleBuilder:2, StrategicThinker:1} },
-        { text: "Create a detailed project plan with milestones and assign each milestone to someone", dims: {ProcessArchitect:3, StrategicThinker:1, ResultsDriver:1} },
+        { text: "Assign specific tasks to each person based on their strengths, check in daily", text_es: "Asignar tareas especificas a cada persona segun sus fortalezas, revisar diariamente", dims: {PeopleBuilder:2, ProcessArchitect:2, ResultsDriver:1} },
+        { text: "Do the most critical parts yourself, delegate the rest", text_es: "Hacer las partes mas criticas tu mismo, delegar el resto", dims: {ResultsDriver:3, ChangeDriver:1} },
+        { text: "Call a team meeting, explain the situation, and let the team self-organize", text_es: "Convocar una junta de equipo, explicar la situacion y dejar que el equipo se auto-organice", dims: {CultureKeeper:2, PeopleBuilder:2, StrategicThinker:1} },
+        { text: "Create a detailed project plan with milestones and assign each milestone to someone", text_es: "Crear un plan de proyecto detallado con hitos y asignar cada hito a alguien", dims: {ProcessArchitect:3, StrategicThinker:1, ResultsDriver:1} },
       ]
     },
-    { title: "New Employee's First Week", context: "A new hire joins your team. They're talented but nervous. What's your priority?",
+    { title: "New Employee's First Week", title_es: "Primera Semana del Nuevo Empleado", context: "A new hire joins your team. They're talented but nervous. What's your priority?", context_es: "Un nuevo integrante se une a tu equipo. Es talentoso pero esta nervioso. Cual es tu prioridad?",
       options: [
-        { text: "Pair them with a senior team member as a buddy for the first month", dims: {PeopleBuilder:3, CultureKeeper:2} },
-        { text: "Give them a small project they can own and deliver in the first week", dims: {ResultsDriver:2, PeopleBuilder:1, ChangeDriver:1} },
-        { text: "Walk them through every process and documentation the team uses", dims: {ProcessArchitect:3, CultureKeeper:1} },
-        { text: "Have 1-on-1 lunch to understand their goals, then align their work accordingly", dims: {CultureKeeper:2, PeopleBuilder:2, StrategicThinker:1} },
+        { text: "Pair them with a senior team member as a buddy for the first month", text_es: "Asignarle un companero senior como buddy durante el primer mes", dims: {PeopleBuilder:3, CultureKeeper:2} },
+        { text: "Give them a small project they can own and deliver in the first week", text_es: "Darle un proyecto pequeno que pueda liderar y entregar en la primera semana", dims: {ResultsDriver:2, PeopleBuilder:1, ChangeDriver:1} },
+        { text: "Walk them through every process and documentation the team uses", text_es: "Guiarlo por cada proceso y documentacion que usa el equipo", dims: {ProcessArchitect:3, CultureKeeper:1} },
+        { text: "Have 1-on-1 lunch to understand their goals, then align their work accordingly", text_es: "Tener una comida 1-a-1 para entender sus metas y alinear su trabajo", dims: {CultureKeeper:2, PeopleBuilder:2, StrategicThinker:1} },
       ]
     },
-    { title: "Top Performer Wants a Promotion", context: "Your best performer asks for a promotion. You don't have budget for it right now.",
+    { title: "Top Performer Wants a Promotion", title_es: "Tu Mejor Elemento Quiere un Ascenso", context: "Your best performer asks for a promotion. You don't have budget for it right now.", context_es: "Tu mejor elemento pide un ascenso. No tienes presupuesto para eso ahora.",
       options: [
-        { text: "Be transparent about budget constraints, create a development plan with a timeline", dims: {PeopleBuilder:3, CultureKeeper:1, StrategicThinker:1} },
-        { text: "Give them more responsibility and a new title, push for budget in next cycle", dims: {ChangeDriver:2, PeopleBuilder:1, ResultsDriver:1} },
-        { text: "Escalate to your manager -- fight for the budget now", dims: {ResultsDriver:2, ChangeDriver:2, PeopleBuilder:1} },
-        { text: "Offer lateral growth -- a challenging cross-functional project to build new skills", dims: {StrategicThinker:2, PeopleBuilder:2, ChangeDriver:1} },
+        { text: "Be transparent about budget constraints, create a development plan with a timeline", text_es: "Ser transparente sobre las limitaciones de presupuesto, crear un plan de desarrollo con fechas", dims: {PeopleBuilder:3, CultureKeeper:1, StrategicThinker:1} },
+        { text: "Give them more responsibility and a new title, push for budget in next cycle", text_es: "Darle mas responsabilidad y un nuevo titulo, pelear por presupuesto en el siguiente ciclo", dims: {ChangeDriver:2, PeopleBuilder:1, ResultsDriver:1} },
+        { text: "Escalate to your manager -- fight for the budget now", text_es: "Escalar con tu jefe -- pelear por el presupuesto ahora", dims: {ResultsDriver:2, ChangeDriver:2, PeopleBuilder:1} },
+        { text: "Offer lateral growth -- a challenging cross-functional project to build new skills", text_es: "Ofrecer crecimiento lateral -- un proyecto cross-funcional retador para desarrollar nuevas habilidades", dims: {StrategicThinker:2, PeopleBuilder:2, ChangeDriver:1} },
       ]
     },
     { title: "Underperforming Team Member", context: "One person consistently misses deadlines. The rest of the team notices and morale is dropping.",

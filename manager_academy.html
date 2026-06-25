@@ -85,24 +85,28 @@
             .menu-toggle { display: block; }
             .content { padding: 20px 16px; }
         }
+
+        .lang-toggle { display: flex; gap: 2px; background: #0f172a; border-radius: 8px; padding: 3px; justify-content: center; margin: 8px 16px; }
+        .lang-btn { padding: 5px 12px; border-radius: 4px; border: none; font-size: 0.7rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b; transition: all 0.2s; flex: 1; text-align: center; }
+        .lang-btn.active { background: #3b82f6; color: white; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="/">Home</a>
-    <a href="/assessment">Assessment</a>
-    <a href="/games">Games</a>
-    <a href="/academy" class="active">Academy</a>
+    <a href="/" class="t" data-en="Home" data-es="Inicio">Inicio</a>
+    <a href="/assessment" class="t" data-en="Assessment" data-es="Evaluacion">Evaluacion</a>
+    <a href="/games" class="t" data-en="Games" data-es="Juegos">Juegos</a>
+    <a href="/academy" class="active t" data-en="Academy" data-es="Academia">Academia</a>
 </nav>
 
 <div class="main">
     <aside class="sidebar" id="sidebar"></aside>
     <main class="content" id="content">
         <div id="welcomeScreen">
-            <h1>Manager Academy</h1>
-            <p>Leadership training based on Harvard, Google, and McKinsey research. Each lesson is 5-7 minutes with a mastery quiz. Score 80% to advance.</p>
-            <p>Select a lesson from the sidebar to begin.</p>
+            <h1 class="t" data-en="Manager Academy" data-es="Academia de Manager">Academia de Manager</h1>
+            <p class="t" data-en="Leadership training based on Harvard, Google, and McKinsey research. Each lesson is 5-7 minutes with a mastery quiz. Score 80% to advance." data-es="Capacitacion en liderazgo basada en investigaciones de Harvard, Google y McKinsey. Cada leccion dura 5-7 minutos con un quiz de dominio. Obtener 80% para avanzar.">Capacitacion en liderazgo basada en investigaciones de Harvard, Google y McKinsey. Cada leccion dura 5-7 minutos con un quiz de dominio. Obtener 80% para avanzar.</p>
+            <p class="t" data-en="Select a lesson from the sidebar to begin." data-es="Selecciona una leccion de la barra lateral para comenzar.">Selecciona una leccion de la barra lateral para comenzar.</p>
         </div>
     </main>
 </div>
@@ -111,6 +115,21 @@
 
 <script>
 // ============================================================
+// LANGUAGE SYSTEM
+// ============================================================
+var currentLang = localStorage.getItem('ops_lang') || 'es';
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ops_lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.lang-btn').forEach(function(b) { if (b.textContent.trim() === lang.toUpperCase()) b.classList.add('active'); });
+    document.querySelectorAll('.t').forEach(function(el) { var text = el.getAttribute('data-' + lang); if (text) el.innerHTML = text; });
+    renderSidebar();
+    if (currentLesson) loadLesson(currentLesson._modId, currentLesson.id);
+}
+function T(en, es) { return currentLang === 'es' ? es : en; }
+
+// ============================================================
 // COURSE DATA
 // ============================================================
 var COURSE = {
@@ -118,10 +137,28 @@ var COURSE = {
         {
             id: 'm1',
             title: 'Psychological Safety',
+            title_es: 'Seguridad Psicologica',
             desc: 'Based on Google Project Aristotle + Amy Edmondson (Harvard)',
+            desc_es: 'Basado en Google Project Aristotle + Amy Edmondson (Harvard)',
             lessons: [
                 {
                     id: 'l1_1', title: 'What Google Discovered About Great Teams',
+                    title_es: 'Lo Que Google Descubrio Sobre los Grandes Equipos',
+                    content_es: '<h2>Lo Que Google Descubrio Sobre los Grandes Equipos</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (5 min) -- Proximamente. Lee la leccion abajo.</p></div>' +
+                        '<p>En 2012, Google lanzo <strong>Project Aristotle</strong> -- un estudio masivo de mas de 180 equipos para descubrir que hace que algunos equipos sean excelentes y otros mediocres.</p>' +
+                        '<p>Esperaban encontrar que los mejores equipos tenian a las personas mas inteligentes, o la mejor combinacion de habilidades. <strong>Estaban equivocados.</strong></p>' +
+                        '<div class="key-concept"><h3>El Factor #1: Seguridad Psicologica</h3>' +
+                        '<p>El factor mas importante no era QUIEN estaba en el equipo, sino COMO trabajaban juntos. Especificamente: <strong>los miembros del equipo se sienten seguros tomando riesgos, haciendo preguntas y admitiendo errores?</strong></p>' +
+                        '<p>Los equipos con alta seguridad psicologica:</p><ul>' +
+                        '<li>Tenian mas probabilidades de aprovechar ideas diversas</li><li>Tenian mas probabilidades de quedarse en Google</li><li>Fueron calificados como 2x mas efectivos por los ejecutivos</li><li>Generaban mas ingresos</li></ul></div>' +
+                        '<blockquote>"La seguridad psicologica es la creencia de que no seras castigado o humillado por hablar con ideas, preguntas, preocupaciones o errores." -- Amy Edmondson, Harvard</blockquote>' +
+                        '<h2>Los 5 Factores (En Orden de Importancia)</h2>' +
+                        '<ol><li><strong>Seguridad Psicologica:</strong> Puedo tomar riesgos sin sentirme inseguro?</li>' +
+                        '<li><strong>Confiabilidad:</strong> Puedo contar con mis companeros?</li>' +
+                        '<li><strong>Estructura y Claridad:</strong> Estan claros los objetivos y roles?</li>' +
+                        '<li><strong>Significado:</strong> Es este trabajo personalmente importante para mi?</li>' +
+                        '<li><strong>Impacto:</strong> Importa nuestro trabajo?</li></ol>',
                     content: '<h2>What Google Discovered About Great Teams</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon. Read the lesson below.</p></div>' +
                         '<p>In 2012, Google launched <strong>Project Aristotle</strong> -- a massive study of 180+ teams to find what makes some teams great and others mediocre.</p>' +
@@ -138,9 +175,9 @@ var COURSE = {
                         '<li><strong>Meaning:</strong> Is this work personally important to me?</li>' +
                         '<li><strong>Impact:</strong> Does our work matter?</li></ol>',
                     quiz: [
-                        { q: 'According to Google\'s Project Aristotle, what is the #1 factor that makes teams effective?', options: ['Having the smartest people', 'Psychological safety', 'Clear goals', 'Strong leadership'], correct: 1, explanation: 'Psychological safety -- feeling safe to take risks and be vulnerable -- was the single most important factor, above all others.' },
-                        { q: 'How many teams did Google study in Project Aristotle?', options: ['50', '100', '180+', '500+'], correct: 2, explanation: 'Google studied over 180 teams across the company to identify patterns in high-performing vs low-performing teams.' },
-                        { q: 'Teams with high psychological safety were rated as how much more effective by executives?', options: ['50% more', '2x more', '3x more', '10x more'], correct: 1, explanation: 'Executives rated psychologically safe teams as 2x more effective, and these teams also brought in more revenue.' },
+                        { q: 'According to Google\'s Project Aristotle, what is the #1 factor that makes teams effective?', q_es: 'Segun el Project Aristotle de Google, cual es el factor #1 que hace efectivos a los equipos?', options: ['Having the smartest people', 'Psychological safety', 'Clear goals', 'Strong leadership'], options_es: ['Tener a las personas mas inteligentes', 'Seguridad psicologica', 'Objetivos claros', 'Liderazgo fuerte'], correct: 1, explanation: 'Psychological safety -- feeling safe to take risks and be vulnerable -- was the single most important factor, above all others.', explanation_es: 'La seguridad psicologica -- sentirse seguro para tomar riesgos y ser vulnerable -- fue el factor mas importante, por encima de todos los demas.' },
+                        { q: 'How many teams did Google study in Project Aristotle?', q_es: 'Cuantos equipos estudio Google en Project Aristotle?', options: ['50', '100', '180+', '500+'], options_es: ['50', '100', '180+', '500+'], correct: 2, explanation: 'Google studied over 180 teams across the company to identify patterns in high-performing vs low-performing teams.', explanation_es: 'Google estudio mas de 180 equipos en toda la empresa para identificar patrones en equipos de alto y bajo rendimiento.' },
+                        { q: 'Teams with high psychological safety were rated as how much more effective by executives?', q_es: 'Los equipos con alta seguridad psicologica fueron calificados como cuanto mas efectivos por los ejecutivos?', options: ['50% more', '2x more', '3x more', '10x more'], options_es: ['50% mas', '2x mas', '3x mas', '10x mas'], correct: 1, explanation: 'Executives rated psychologically safe teams as 2x more effective, and these teams also brought in more revenue.', explanation_es: 'Los ejecutivos calificaron a los equipos psicologicamente seguros como 2x mas efectivos, y estos equipos tambien generaron mas ingresos.' },
                     ]
                 },
                 {
