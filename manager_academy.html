@@ -75,7 +75,7 @@
         .btn-prev { background: #334155; color: #e2e8f0; }
         .btn-next { background: #3b82f6; color: #0f172a; }
         .btn-next:disabled { background: #475569; cursor: not-allowed; }
-        .btn-next.locked::after { content: ' (pass quiz to unlock)'; font-weight: 400; font-size: 0.75rem; }
+        .btn-next .lock-text { font-weight: 400; font-size: 0.75rem; }
 
         /* Mobile */
         .menu-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: #3b82f6; color: #0f172a; border: none; font-size: 1.5rem; cursor: pointer; z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
@@ -182,6 +182,19 @@ var COURSE = {
                 },
                 {
                     id: 'l1_2', title: 'How to Build Psychological Safety',
+                    title_es: 'Como Construir Seguridad Psicologica',
+                    content_es: '<h2>Como Construir Seguridad Psicologica como Manager</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (6 min) -- Proximamente.</p></div>' +
+                        '<p>La seguridad psicologica no significa ser amable. Significa crear un ambiente donde las personas puedan ser <strong>sinceras</strong> -- donde el desacuerdo, las preguntas y los errores se traten como aprendizaje, no como amenazas.</p>' +
+                        '<div class="key-concept"><h3>7 Acciones Que Construyen Seguridad</h3><ol>' +
+                        '<li><strong>Enmarca el trabajo como aprendizaje, no ejecucion.</strong> "Estamos experimentando" vs "Necesitamos hacer esto bien."</li>' +
+                        '<li><strong>Reconoce tu propia falibilidad.</strong> "Puedo estar equivocado. Que me estoy perdiendo?"</li>' +
+                        '<li><strong>Modela la curiosidad.</strong> Haz preguntas genuinas, no solo des respuestas.</li>' +
+                        '<li><strong>Responde productivamente a las malas noticias.</strong> "Gracias por senalarlo. Como lo arreglamos?" NO "Como dejaste que esto pasara?"</li>' +
+                        '<li><strong>Normaliza las historias de fracaso.</strong> Comparte tus propios errores abiertamente.</li>' +
+                        '<li><strong>Invita a participar explicitamente.</strong> "Sara, has estado callada. Cual es tu opinion?"</li>' +
+                        '<li><strong>Sanciona las violaciones claras.</strong> Si alguien ridiculiza una pregunta, abordalo inmediatamente.</li></ol></div>' +
+                        '<blockquote>"El trabajo del lider es crear las condiciones donde las personas puedan hacer su mejor trabajo. Eso empieza con la seguridad." -- Ed Catmull, Pixar</blockquote>',
                     content: '<h2>How to Build Psychological Safety as a Manager</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
                         '<p>Psychological safety doesn\'t mean being nice. It means creating an environment where people can be <strong>candid</strong> -- where disagreement, questions, and mistakes are treated as learning, not threats.</p>' +
@@ -195,13 +208,25 @@ var COURSE = {
                         '<li><strong>Sanction clear violations.</strong> If someone ridicules a question, address it immediately.</li></ol></div>' +
                         '<blockquote>"The leader\'s job is to create the conditions where people can do their best work. That starts with safety." -- Ed Catmull, Pixar</blockquote>',
                     quiz: [
-                        { q: 'A team member brings you bad news about a project delay. The best response is:', options: ['"How did you let this happen?"', '"Thanks for flagging that. How do we fix it?"', '"Let\'s discuss this in the team meeting"', '"I\'ll handle it myself"'], correct: 1, explanation: 'Responding productively to bad news encourages people to surface problems early. Blaming them ensures they hide problems next time.' },
-                        { q: 'Psychological safety means:', options: ['Everyone is nice to each other', 'There are no disagreements', 'People feel safe being candid and vulnerable', 'The manager protects everyone from criticism'], correct: 2, explanation: 'It\'s not about being nice -- it\'s about candor. People should feel safe to disagree, ask questions, and admit mistakes without fear.' },
-                        { q: 'Which action does NOT build psychological safety?', options: ['Sharing your own mistakes', 'Asking "What am I missing?"', 'Publicly criticizing someone who made an error', 'Explicitly inviting quiet team members to speak'], correct: 2, explanation: 'Public criticism destroys safety. Everyone watching learns: "If I make a mistake, I\'ll be humiliated too." Address issues privately.' },
+                        { q: 'A team member brings you bad news about a project delay. The best response is:', q_es: 'Un miembro del equipo te trae malas noticias sobre un retraso en el proyecto. La mejor respuesta es:', options: ['"How did you let this happen?"', '"Thanks for flagging that. How do we fix it?"', '"Let\'s discuss this in the team meeting"', '"I\'ll handle it myself"'], options_es: ['"Como dejaste que esto pasara?"', '"Gracias por senalarlo. Como lo arreglamos?"', '"Vamos a discutirlo en la junta de equipo"', '"Yo me encargo"'], correct: 1, explanation: 'Responding productively to bad news encourages people to surface problems early. Blaming them ensures they hide problems next time.', explanation_es: 'Responder productivamente a malas noticias motiva a las personas a reportar problemas temprano. Culparlos asegura que oculten problemas la proxima vez.' },
+                        { q: 'Psychological safety means:', q_es: 'La seguridad psicologica significa:', options: ['Everyone is nice to each other', 'There are no disagreements', 'People feel safe being candid and vulnerable', 'The manager protects everyone from criticism'], options_es: ['Todos son amables entre si', 'No hay desacuerdos', 'Las personas se sienten seguras siendo sinceras y vulnerables', 'El manager protege a todos de la critica'], correct: 2, explanation: 'It\'s not about being nice -- it\'s about candor. People should feel safe to disagree, ask questions, and admit mistakes without fear.', explanation_es: 'No se trata de ser amable -- se trata de sinceridad. Las personas deben sentirse seguras para disentir, hacer preguntas y admitir errores sin miedo.' },
+                        { q: 'Which action does NOT build psychological safety?', q_es: 'Cual accion NO construye seguridad psicologica?', options: ['Sharing your own mistakes', 'Asking "What am I missing?"', 'Publicly criticizing someone who made an error', 'Explicitly inviting quiet team members to speak'], options_es: ['Compartir tus propios errores', 'Preguntar "Que me estoy perdiendo?"', 'Criticar publicamente a alguien que cometio un error', 'Invitar explicitamente a hablar a los miembros callados'], correct: 2, explanation: 'Public criticism destroys safety. Everyone watching learns: "If I make a mistake, I\'ll be humiliated too." Address issues privately.', explanation_es: 'La critica publica destruye la seguridad. Todos los que observan aprenden: "Si cometo un error, tambien sere humillado." Aborda los problemas en privado.' },
                     ]
                 },
                 {
                     id: 'l1_3', title: 'The 5 Dysfunctions of a Team',
+                    title_es: 'Las 5 Disfunciones de un Equipo',
+                    content_es: '<h2>Las 5 Disfunciones de un Equipo de Lencioni</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (5 min) -- Proximamente.</p></div>' +
+                        '<p>El framework de Patrick Lencioni es una piramide. <strong>No puedes arreglar la parte superior sin arreglar primero la base.</strong></p>' +
+                        '<div class="key-concept"><h3>La Piramide (De Abajo Hacia Arriba)</h3><ol>' +
+                        '<li><strong>Ausencia de Confianza:</strong> Las personas ocultan debilidades y errores. No son vulnerables. (Solucion: ejercicio de historias personales, confianza basada en vulnerabilidad)</li>' +
+                        '<li><strong>Miedo al Conflicto:</strong> Armonia artificial. Las personas estan de acuerdo en las juntas pero en desacuerdo en los pasillos. (Solucion: buscar el conflicto, exigir debate)</li>' +
+                        '<li><strong>Falta de Compromiso:</strong> Sin debate real, no hay aceptacion. Las personas salen de las juntas con ambiguedad. (Solucion: comunicacion en cascada, fechas limite)</li>' +
+                        '<li><strong>Evasion de Responsabilidad:</strong> Las personas no confrontan a sus pares sobre comportamientos. Solo el manager rinde cuentas. (Solucion: responsabilidad entre pares, metas publicas)</li>' +
+                        '<li><strong>Falta de Atencion a Resultados:</strong> Las personas priorizan ego, carrera o departamento sobre resultados del equipo. (Solucion: tablero publico, recompensas basadas en equipo)</li></ol></div>' +
+                        '<h2>Como Diagnosticar a Tu Equipo</h2>' +
+                        '<p>Si tu equipo evita conversaciones dificiles, empieza en #2. Si tienen conversaciones dificiles pero no dan seguimiento, es #3 o #4. Si ejecutan pero no ganan, es #5.</p>',
                     content: '<h2>Lencioni\'s 5 Dysfunctions of a Team</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon.</p></div>' +
                         '<p>Patrick Lencioni\'s framework is a pyramid. <strong>You can\'t fix the top without fixing the bottom first.</strong></p>' +
@@ -214,9 +239,9 @@ var COURSE = {
                         '<h2>How to Diagnose Your Team</h2>' +
                         '<p>If your team avoids hard conversations, starts at #2. If they have hard conversations but don\'t follow through, it\'s #3 or #4. If they execute but don\'t win, it\'s #5.</p>',
                     quiz: [
-                        { q: 'What is the foundation of Lencioni\'s pyramid (the first dysfunction to fix)?', options: ['Fear of Conflict', 'Absence of Trust', 'Lack of Commitment', 'Avoidance of Accountability'], correct: 1, explanation: 'Trust is the foundation. Without vulnerability-based trust, teams can\'t have honest conflict, which means no real commitment.' },
-                        { q: 'Your team agrees on everything in meetings but nothing changes afterward. Which dysfunction is this?', options: ['Absence of Trust', 'Fear of Conflict', 'Lack of Commitment', 'Inattention to Results'], correct: 1, explanation: 'Artificial harmony. People avoid real debate, so decisions are superficial. Without genuine conflict, there\'s no buy-in.' },
-                        { q: 'Only the manager holds people accountable -- peers never call each other out. This is:', options: ['Normal management', 'Avoidance of Accountability', 'Good delegation', 'Fear of Conflict'], correct: 1, explanation: 'Peer accountability is stronger than manager accountability. If only you hold people accountable, the team hasn\'t built enough trust for honest feedback.' },
+                        { q: 'What is the foundation of Lencioni\'s pyramid (the first dysfunction to fix)?', q_es: 'Cual es la base de la piramide de Lencioni (la primera disfuncion a resolver)?', options: ['Fear of Conflict', 'Absence of Trust', 'Lack of Commitment', 'Avoidance of Accountability'], options_es: ['Miedo al Conflicto', 'Ausencia de Confianza', 'Falta de Compromiso', 'Evasion de Responsabilidad'], correct: 1, explanation: 'Trust is the foundation. Without vulnerability-based trust, teams can\'t have honest conflict, which means no real commitment.', explanation_es: 'La confianza es la base. Sin confianza basada en vulnerabilidad, los equipos no pueden tener conflicto honesto, lo que significa que no hay compromiso real.' },
+                        { q: 'Your team agrees on everything in meetings but nothing changes afterward. Which dysfunction is this?', q_es: 'Tu equipo esta de acuerdo en todo durante las juntas pero nada cambia despues. Cual disfuncion es esta?', options: ['Absence of Trust', 'Fear of Conflict', 'Lack of Commitment', 'Inattention to Results'], options_es: ['Ausencia de Confianza', 'Miedo al Conflicto', 'Falta de Compromiso', 'Falta de Atencion a Resultados'], correct: 1, explanation: 'Artificial harmony. People avoid real debate, so decisions are superficial. Without genuine conflict, there\'s no buy-in.', explanation_es: 'Armonia artificial. Las personas evitan el debate real, asi que las decisiones son superficiales. Sin conflicto genuino, no hay aceptacion.' },
+                        { q: 'Only the manager holds people accountable -- peers never call each other out. This is:', q_es: 'Solo el manager rinde cuentas -- los pares nunca se confrontan entre si. Esto es:', options: ['Normal management', 'Avoidance of Accountability', 'Good delegation', 'Fear of Conflict'], options_es: ['Gestion normal', 'Evasion de Responsabilidad', 'Buena delegacion', 'Miedo al Conflicto'], correct: 1, explanation: 'Peer accountability is stronger than manager accountability. If only you hold people accountable, the team hasn\'t built enough trust for honest feedback.', explanation_es: 'La responsabilidad entre pares es mas fuerte que la del manager. Si solo tu rindes cuentas, el equipo no ha construido suficiente confianza para retroalimentacion honesta.' },
                     ]
                 },
             ]
@@ -224,10 +249,27 @@ var COURSE = {
         {
             id: 'm2',
             title: 'Effective Delegation',
+            title_es: 'Delegacion Efectiva',
             desc: 'Based on High Output Management by Andy Grove (Intel)',
+            desc_es: 'Basado en High Output Management de Andy Grove (Intel)',
             lessons: [
                 {
                     id: 'l2_1', title: 'Why Most Managers Fail at Delegation',
+                    title_es: 'Por Que la Mayoria de los Managers Fallan al Delegar',
+                    content_es: '<h2>Por Que la Mayoria de los Managers Fallan al Delegar</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (6 min) -- Proximamente.</p></div>' +
+                        '<p>El 70% de los managers primerizos delegan muy poco (haciendo todo ellos mismos) o delegan demasiado (soltando sin contexto). Ambos fallan.</p>' +
+                        '<div class="key-concept"><h3>El Framework de Delegacion de Andy Grove</h3>' +
+                        '<p>Tu produccion como manager = la produccion de tu equipo + la produccion de equipos que influencias. Tu no produces -- tu <strong>multiplicas</strong>.</p>' +
+                        '<p>Esto significa que tu actividad mas valiosa es <strong>trabajo de alto apalancamiento</strong> -- cosas que aumentan la produccion de tu equipo mas que el tiempo que inviertes.</p>' +
+                        '<ul><li><strong>Alto apalancamiento:</strong> Capacitacion, 1-on-1s, establecer metas claras, eliminar obstaculos</li>' +
+                        '<li><strong>Bajo apalancamiento:</strong> Hacer el trabajo tu mismo, asistir a juntas que no te necesitan, revisar trabajo que podrias delegar</li></ul></div>' +
+                        '<blockquote>"La produccion de un manager = la produccion de su organizacion + la produccion de organizaciones vecinas bajo su influencia." -- Andy Grove</blockquote>' +
+                        '<h2>El Espectro de Delegacion</h2>' +
+                        '<ul><li><strong>Decir:</strong> "Haz X para el viernes." (Empleados nuevos, tareas urgentes)</li>' +
+                        '<li><strong>Vender:</strong> "Aqui esta por que X importa. Puedes encargarte?" (Empleados en crecimiento)</li>' +
+                        '<li><strong>Participar:</strong> "Vamos a definir el enfoque juntos." (Tareas complejas)</li>' +
+                        '<li><strong>Delegar:</strong> "Tu eres dueno de esto. Actualizame semanalmente." (Empleados senior/de confianza)</li></ul>',
                     content: '<h2>Why Most Managers Fail at Delegation</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
                         '<p>70% of first-time managers either delegate too little (doing everything themselves) or delegate too much (dumping without context). Both fail.</p>' +
@@ -243,13 +285,28 @@ var COURSE = {
                         '<li><strong>Participate:</strong> "Let\'s figure out the approach together." (Complex tasks)</li>' +
                         '<li><strong>Delegate:</strong> "You own this. Update me weekly." (Senior/trusted employees)</li></ul>',
                     quiz: [
-                        { q: 'According to Andy Grove, a manager\'s output is:', options: ['Their individual work product', 'The number of decisions they make', 'The output of their team + teams they influence', 'Their direct reports\' satisfaction score'], correct: 2, explanation: 'Managers don\'t produce -- they multiply. Your value is measured by what your team achieves, not what you do individually.' },
-                        { q: 'Which is a HIGH leverage activity for a manager?', options: ['Writing code that a team member could write', 'Training a team member on a new skill', 'Attending a status meeting', 'Reviewing every PR personally'], correct: 1, explanation: 'Training is high leverage because the time you invest multiplies the team member\'s output for months/years. Doing work they could do is low leverage.' },
-                        { q: 'A new employee needs to complete a task they\'ve never done before. Which delegation level?', options: ['Tell (do X by Friday)', 'Sell (here\'s why it matters)', 'Participate (let\'s figure it out together)', 'Delegate (you own it)'], correct: 2, explanation: 'New employees on unfamiliar tasks need the Participate level -- work together so they learn the approach while still getting the outcome.' },
+                        { q: 'According to Andy Grove, a manager\'s output is:', q_es: 'Segun Andy Grove, la produccion de un manager es:', options: ['Their individual work product', 'The number of decisions they make', 'The output of their team + teams they influence', 'Their direct reports\' satisfaction score'], options_es: ['Su producto de trabajo individual', 'El numero de decisiones que toma', 'La produccion de su equipo + equipos que influencia', 'La puntuacion de satisfaccion de sus reportes directos'], correct: 2, explanation: 'Managers don\'t produce -- they multiply. Your value is measured by what your team achieves, not what you do individually.', explanation_es: 'Los managers no producen -- multiplican. Tu valor se mide por lo que logra tu equipo, no por lo que haces individualmente.' },
+                        { q: 'Which is a HIGH leverage activity for a manager?', q_es: 'Cual es una actividad de ALTO apalancamiento para un manager?', options: ['Writing code that a team member could write', 'Training a team member on a new skill', 'Attending a status meeting', 'Reviewing every PR personally'], options_es: ['Escribir codigo que un miembro del equipo podria escribir', 'Capacitar a un miembro del equipo en una nueva habilidad', 'Asistir a una junta de estatus', 'Revisar cada PR personalmente'], correct: 1, explanation: 'Training is high leverage because the time you invest multiplies the team member\'s output for months/years. Doing work they could do is low leverage.', explanation_es: 'La capacitacion es de alto apalancamiento porque el tiempo que inviertes multiplica la produccion del miembro del equipo por meses/anos. Hacer trabajo que ellos podrian hacer es de bajo apalancamiento.' },
+                        { q: 'A new employee needs to complete a task they\'ve never done before. Which delegation level?', q_es: 'Un empleado nuevo necesita completar una tarea que nunca ha hecho. Cual nivel de delegacion?', options: ['Tell (do X by Friday)', 'Sell (here\'s why it matters)', 'Participate (let\'s figure it out together)', 'Delegate (you own it)'], options_es: ['Decir (haz X para el viernes)', 'Vender (aqui esta por que importa)', 'Participar (vamos a definirlo juntos)', 'Delegar (tu eres dueno de esto)'], correct: 2, explanation: 'New employees on unfamiliar tasks need the Participate level -- work together so they learn the approach while still getting the outcome.', explanation_es: 'Los empleados nuevos en tareas desconocidas necesitan el nivel Participar -- trabajar juntos para que aprendan el enfoque mientras obtienen el resultado.' },
                     ]
                 },
                 {
                     id: 'l2_2', title: 'The Art of the 1-on-1',
+                    title_es: 'El Arte del 1-on-1',
+                    content_es: '<h2>El Arte del 1-on-1</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (5 min) -- Proximamente.</p></div>' +
+                        '<p>El 1-on-1 es la herramienta mas poderosa del manager. Bien hecho, son los 30 minutos de mayor apalancamiento de tu semana.</p>' +
+                        '<div class="key-concept"><h3>La Plantilla de 30 Minutos</h3><ol>' +
+                        '<li><strong>Su agenda primero (10 min):</strong> "Que tienes en mente?" Deja que ellos dirijan. Esta es SU junta.</li>' +
+                        '<li><strong>Coaching (10 min):</strong> Escoge UNA cosa para desarrollar. Haz preguntas, no des respuestas. "Que has intentado? Que pasaria si...?"</li>' +
+                        '<li><strong>Alineacion (5 min):</strong> "Como se conecta tu trabajo con las 3 metas principales del equipo este trimestre?"</li>' +
+                        '<li><strong>Check-in personal (5 min):</strong> "Como te sientes respecto al trabajo? Algo en lo que pueda ayudar?"</li></ol></div>' +
+                        '<h2>Errores Comunes en 1-on-1s</h2>' +
+                        '<ul><li><strong>Actualizaciones de estatus:</strong> "Que hiciste esta semana?" es un desperdicio. Usa Slack/standup para eso.</li>' +
+                        '<li><strong>Solo la agenda del manager:</strong> Si tu eres el que habla todo el tiempo, no estas aprendiendo.</li>' +
+                        '<li><strong>Cancelarlos:</strong> Cancelar 1-on-1s senala "no eres suficientemente importante."</li>' +
+                        '<li><strong>Sin seguimiento:</strong> Si te comprometes a algo en un 1-on-1 y no cumples, la confianza se erosiona.</li></ul>' +
+                        '<blockquote>"El 1-on-1 es la junta del subordinado. Tu trabajo es escuchar, hacer coaching y eliminar obstaculos." -- Andy Grove</blockquote>',
                     content: '<h2>The Art of the 1-on-1</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (5 min) -- Coming soon.</p></div>' +
                         '<p>The 1-on-1 is the manager\'s most powerful tool. Done right, it\'s the single highest-leverage 30 minutes in your week.</p>' +
@@ -265,13 +322,28 @@ var COURSE = {
                         '<li><strong>No follow-up:</strong> If you commit to something in a 1-on-1 and don\'t follow through, trust erodes.</li></ul>' +
                         '<blockquote>"The 1-on-1 is the subordinate\'s meeting. Your job is to listen, coach, and remove obstacles." -- Andy Grove</blockquote>',
                     quiz: [
-                        { q: 'In a 1-on-1, whose agenda should come first?', options: ['The manager\'s', 'The direct report\'s', 'HR\'s', 'It doesn\'t matter'], correct: 1, explanation: 'It\'s THEIR meeting. Start with "What\'s on your mind?" and let them drive. Your job is to listen and coach.' },
-                        { q: 'Which is a WASTE of 1-on-1 time?', options: ['Coaching on a specific skill', 'Status updates on tasks', 'Career development discussion', 'Personal check-in on wellbeing'], correct: 1, explanation: 'Status updates belong in Slack or standups. 1-on-1s are for coaching, development, and building trust -- things that can\'t happen in group settings.' },
-                        { q: 'You need to cancel a 1-on-1 due to a conflict. What should you do?', options: ['Just cancel it -- they\'ll understand', 'Reschedule immediately for the same week', 'Wait until next week\'s slot', 'Send an email summarizing what you would have discussed'], correct: 1, explanation: 'Always reschedule, never just cancel. Regularly canceling 1-on-1s tells the person "you\'re not a priority."' },
+                        { q: 'In a 1-on-1, whose agenda should come first?', q_es: 'En un 1-on-1, la agenda de quien debe ir primero?', options: ['The manager\'s', 'The direct report\'s', 'HR\'s', 'It doesn\'t matter'], options_es: ['La del manager', 'La del reporte directo', 'La de RH', 'No importa'], correct: 1, explanation: 'It\'s THEIR meeting. Start with "What\'s on your mind?" and let them drive. Your job is to listen and coach.', explanation_es: 'Es SU junta. Empieza con "Que tienes en mente?" y deja que ellos dirijan. Tu trabajo es escuchar y hacer coaching.' },
+                        { q: 'Which is a WASTE of 1-on-1 time?', q_es: 'Cual es un DESPERDICIO de tiempo en un 1-on-1?', options: ['Coaching on a specific skill', 'Status updates on tasks', 'Career development discussion', 'Personal check-in on wellbeing'], options_es: ['Coaching en una habilidad especifica', 'Actualizaciones de estatus de tareas', 'Discusion de desarrollo de carrera', 'Check-in personal sobre bienestar'], correct: 1, explanation: 'Status updates belong in Slack or standups. 1-on-1s are for coaching, development, and building trust -- things that can\'t happen in group settings.', explanation_es: 'Las actualizaciones de estatus van en Slack o standups. Los 1-on-1s son para coaching, desarrollo y construir confianza -- cosas que no pueden pasar en grupos.' },
+                        { q: 'You need to cancel a 1-on-1 due to a conflict. What should you do?', q_es: 'Necesitas cancelar un 1-on-1 por un conflicto de agenda. Que debes hacer?', options: ['Just cancel it -- they\'ll understand', 'Reschedule immediately for the same week', 'Wait until next week\'s slot', 'Send an email summarizing what you would have discussed'], options_es: ['Solo cancelalo -- entenderan', 'Reagendar inmediatamente para la misma semana', 'Esperar al slot de la siguiente semana', 'Enviar un email resumiendo lo que habrias discutido'], correct: 1, explanation: 'Always reschedule, never just cancel. Regularly canceling 1-on-1s tells the person "you\'re not a priority."', explanation_es: 'Siempre reagenda, nunca solo canceles. Cancelar regularmente 1-on-1s le dice a la persona "no eres una prioridad."' },
                     ]
                 },
                 {
                     id: 'l2_3', title: 'Giving Feedback That Actually Changes Behavior',
+                    title_es: 'Dar Retroalimentacion Que Realmente Cambia Comportamiento',
+                    content_es: '<h2>Dar Retroalimentacion Que Cambia Comportamiento</h2>' +
+                        '<div class="video-placeholder"><div class="icon">&#127909;</div><p>Video con Avatar IA (6 min) -- Proximamente.</p></div>' +
+                        '<p>La mayoria de la retroalimentacion falla porque es vaga ("buen trabajo"), retrasada (revision anual), o amenazante ("necesitas mejorar"). Esto es lo que funciona.</p>' +
+                        '<div class="key-concept"><h3>El Framework SBI (Situacion-Comportamiento-Impacto)</h3>' +
+                        '<p>Desarrollado por el Center for Creative Leadership. Usado por Google, Amazon y McKinsey.</p><ol>' +
+                        '<li><strong>Situacion:</strong> Cuando y donde. "En la junta con el cliente de ayer..."</li>' +
+                        '<li><strong>Comportamiento:</strong> Lo que HICIERON (observable, no interpretado). "...interrumpiste al cliente tres veces."</li>' +
+                        '<li><strong>Impacto:</strong> Que resulto. "El cliente parecio frustrado y corto la junta."</li></ol>' +
+                        '<p><strong>Luego pregunta:</strong> "Cual es tu perspectiva? Como podriamos manejarlo diferente la proxima vez?"</p></div>' +
+                        '<h2>Timing de Retroalimentacion</h2>' +
+                        '<ul><li><strong>Dentro de 24 horas:</strong> Comportamiento especifico + contexto aun fresco</li>' +
+                        '<li><strong>Privado para correccion:</strong> Nunca critiques publicamente</li>' +
+                        '<li><strong>Publico para reconocimiento:</strong> Reconocimiento especifico frente a pares amplifica el comportamiento</li></ul>' +
+                        '<blockquote>"La retroalimentacion es un regalo. Pero un regalo mal entregado es solo un ataque." -- Kim Scott, Radical Candor</blockquote>',
                     content: '<h2>Giving Feedback That Changes Behavior</h2>' +
                         '<div class="video-placeholder"><div class="icon">&#127909;</div><p>AI Avatar Video (6 min) -- Coming soon.</p></div>' +
                         '<p>Most feedback fails because it\'s vague ("good job"), delayed (annual review), or threatening ("you need to improve"). Here\'s what works.</p>' +
@@ -287,9 +359,9 @@ var COURSE = {
                         '<li><strong>Public for praise:</strong> Specific praise in front of peers amplifies the behavior</li></ul>' +
                         '<blockquote>"Feedback is a gift. But a gift delivered badly is just an attack." -- Kim Scott, Radical Candor</blockquote>',
                     quiz: [
-                        { q: 'The SBI feedback model stands for:', options: ['Simple, Brief, Immediate', 'Situation, Behavior, Impact', 'Strengths, Barriers, Improvement', 'Start, Build, Iterate'], correct: 1, explanation: 'Situation (when/where), Behavior (what they did, observable), Impact (what resulted). Then ask for their perspective.' },
-                        { q: 'Which is better feedback: "You did a great job" or "In the client presentation, your data visualization made the ROI clear -- the client approved the budget on the spot"?', options: ['The first -- it\'s positive', 'The second -- it\'s specific', 'Both are equally good', 'Neither -- don\'t give praise publicly'], correct: 1, explanation: 'Specific feedback (SBI) tells the person exactly what to REPEAT. Vague praise feels good but teaches nothing.' },
-                        { q: 'When should corrective feedback be given?', options: ['In the next team meeting', 'During the annual review', 'Within 24 hours, privately', 'Wait until you see a pattern'], correct: 2, explanation: 'Within 24 hours while context is fresh, and always privately. Delayed or public correction destroys trust.' },
+                        { q: 'The SBI feedback model stands for:', q_es: 'El modelo de retroalimentacion SBI significa:', options: ['Simple, Brief, Immediate', 'Situation, Behavior, Impact', 'Strengths, Barriers, Improvement', 'Start, Build, Iterate'], options_es: ['Simple, Breve, Inmediato', 'Situacion, Comportamiento, Impacto', 'Fortalezas, Barreras, Mejora', 'Iniciar, Construir, Iterar'], correct: 1, explanation: 'Situation (when/where), Behavior (what they did, observable), Impact (what resulted). Then ask for their perspective.', explanation_es: 'Situacion (cuando/donde), Comportamiento (que hicieron, observable), Impacto (que resulto). Luego pregunta por su perspectiva.' },
+                        { q: 'Which is better feedback: "You did a great job" or "In the client presentation, your data visualization made the ROI clear -- the client approved the budget on the spot"?', q_es: 'Cual es mejor retroalimentacion: "Hiciste un buen trabajo" o "En la presentacion al cliente, tu visualizacion de datos dejo claro el ROI -- el cliente aprobo el presupuesto en el momento"?', options: ['The first -- it\'s positive', 'The second -- it\'s specific', 'Both are equally good', 'Neither -- don\'t give praise publicly'], options_es: ['La primera -- es positiva', 'La segunda -- es especifica', 'Ambas son igual de buenas', 'Ninguna -- no des reconocimiento publico'], correct: 1, explanation: 'Specific feedback (SBI) tells the person exactly what to REPEAT. Vague praise feels good but teaches nothing.', explanation_es: 'La retroalimentacion especifica (SBI) le dice a la persona exactamente que REPETIR. El reconocimiento vago se siente bien pero no ensena nada.' },
+                        { q: 'When should corrective feedback be given?', q_es: 'Cuando se debe dar retroalimentacion correctiva?', options: ['In the next team meeting', 'During the annual review', 'Within 24 hours, privately', 'Wait until you see a pattern'], options_es: ['En la siguiente junta de equipo', 'Durante la revision anual', 'Dentro de 24 horas, en privado', 'Esperar hasta ver un patron'], correct: 2, explanation: 'Within 24 hours while context is fresh, and always privately. Delayed or public correction destroys trust.', explanation_es: 'Dentro de 24 horas mientras el contexto esta fresco, y siempre en privado. La correccion retrasada o publica destruye la confianza.' },
                     ]
                 },
             ]
@@ -308,7 +380,8 @@ var currentLesson = null;
 // ============================================================
 function renderSidebar() {
     var sb = document.getElementById('sidebar');
-    var html = '<h3>Course Modules</h3>';
+    var html = '<div class="lang-toggle"><button class="lang-btn ' + (currentLang === 'es' ? 'active' : '') + '" onclick="setLang(\'es\')">ES</button><button class="lang-btn ' + (currentLang === 'en' ? 'active' : '') + '" onclick="setLang(\'en\')">EN</button></div>';
+    html += '<h3>' + T('Course Modules', 'Modulos del Curso') + '</h3>';
     var totalLessons = 0;
     var completedLessons = 0;
 
@@ -317,26 +390,28 @@ function renderSidebar() {
         totalLessons += mod.lessons.length;
         completedLessons += modCompleted;
         var isOpen = mod.lessons.some(function(l) { return currentLesson && currentLesson.id === l.id; });
+        var modTitle = currentLang === 'es' ? (mod.title_es || mod.title) : mod.title;
 
         html += '<div class="module-header" onclick="toggleModule(\'' + mod.id + '\')">' +
             '<span class="arrow ' + (isOpen ? 'open' : '') + '" id="arrow_' + mod.id + '">&#9654;</span>' +
-            '<span>' + mod.title + ' (' + modCompleted + '/' + mod.lessons.length + ')</span></div>';
+            '<span>' + modTitle + ' (' + modCompleted + '/' + mod.lessons.length + ')</span></div>';
         html += '<div class="lesson-list ' + (isOpen ? 'open' : '') + '" id="lessons_' + mod.id + '">';
         mod.lessons.forEach(function(lesson, idx) {
             var isCompleted = progress[lesson.id];
             var isActive = currentLesson && currentLesson.id === lesson.id;
             var isLocked = idx > 0 && !progress[mod.lessons[idx-1].id];
+            var lessonTitle = currentLang === 'es' ? (lesson.title_es || lesson.title) : lesson.title;
             html += '<div class="lesson-item ' + (isActive ? 'active' : '') + ' ' + (isCompleted ? 'completed' : '') + '" ' +
-                (isLocked ? 'style="opacity:0.4;cursor:not-allowed;" title="Pass previous quiz to unlock"' : 'onclick="loadLesson(\'' + mod.id + '\',\'' + lesson.id + '\')"') + '>' +
+                (isLocked ? 'style="opacity:0.4;cursor:not-allowed;" title="' + T('Pass previous quiz to unlock', 'Pasar quiz anterior para desbloquear') + '"' : 'onclick="loadLesson(\'' + mod.id + '\',\'' + lesson.id + '\')"') + '>' +
                 '<span class="icon">' + (isCompleted ? '&#10003;' : (isLocked ? '&#128274;' : '&#9675;')) + '</span>' +
-                '<span>' + lesson.title + '</span></div>';
+                '<span>' + lessonTitle + '</span></div>';
         });
         html += '</div>';
     });
 
     var pct = totalLessons > 0 ? Math.round(completedLessons / totalLessons * 100) : 0;
     html += '<div class="progress-mini"><div class="fill" style="width:' + pct + '%"></div></div>';
-    html += '<div style="padding:4px 16px;font-size:0.75rem;color:#64748b;">' + pct + '% complete (' + completedLessons + '/' + totalLessons + ')</div>';
+    html += '<div style="padding:4px 16px;font-size:0.75rem;color:#64748b;">' + pct + T('% complete', '% completado') + ' (' + completedLessons + '/' + totalLessons + ')</div>';
     sb.innerHTML = html;
 }
 
@@ -357,17 +432,20 @@ function loadLesson(modId, lessonId) {
     currentLesson._modId = modId;
 
     var content = document.getElementById('content');
-    var quizHTML = '<div class="quiz-section"><h3>Knowledge Check</h3><div class="subtitle">Score 80% or higher to advance to the next lesson</div>';
+    var quizHTML = '<div class="quiz-section"><h3>' + T('Knowledge Check', 'Verificacion de Conocimiento') + '</h3><div class="subtitle">' + T('Score 80% or higher to advance to the next lesson', 'Obtener 80% o mas para avanzar a la siguiente leccion') + '</div>';
 
     lesson.quiz.forEach(function(q, qi) {
-        quizHTML += '<div class="quiz-q" id="qq_' + qi + '"><div class="question">' + (qi+1) + '. ' + q.q + '</div><div class="options">';
-        q.options.forEach(function(opt, oi) {
+        var qText = currentLang === 'es' ? (q.q_es || q.q) : q.q;
+        var qOpts = currentLang === 'es' ? (q.options_es || q.options) : q.options;
+        var qExp = currentLang === 'es' ? (q.explanation_es || q.explanation) : q.explanation;
+        quizHTML += '<div class="quiz-q" id="qq_' + qi + '"><div class="question">' + (qi+1) + '. ' + qText + '</div><div class="options">';
+        qOpts.forEach(function(opt, oi) {
             quizHTML += '<div class="option" id="opt_' + qi + '_' + oi + '" onclick="selectOption(' + qi + ',' + oi + ')">' + opt + '</div>';
         });
-        quizHTML += '</div><div class="explanation" id="exp_' + qi + '">' + q.explanation + '</div></div>';
+        quizHTML += '</div><div class="explanation" id="exp_' + qi + '">' + qExp + '</div></div>';
     });
 
-    quizHTML += '<button class="btn-quiz" id="submitQuiz" onclick="submitQuiz()">Submit Answers</button>';
+    quizHTML += '<button class="btn-quiz" id="submitQuiz" onclick="submitQuiz()">' + T('Submit Answers', 'Enviar Respuestas') + '</button>';
     quizHTML += '<div id="quizResult"></div></div>';
 
     // Nav buttons
@@ -378,17 +456,20 @@ function loadLesson(modId, lessonId) {
 
     var navHTML = '<div class="nav-buttons">';
     if (hasPrev) {
-        navHTML += '<button class="btn-nav btn-prev" onclick="navPrev()">&#8592; Previous</button>';
+        navHTML += '<button class="btn-nav btn-prev" onclick="navPrev()">&#8592; ' + T('Previous', 'Anterior') + '</button>';
     } else {
         navHTML += '<span></span>';
     }
     if (hasNext) {
         var nextLocked = !progress[lesson.id];
-        navHTML += '<button class="btn-nav btn-next ' + (nextLocked ? 'locked' : '') + '" id="btnNext" ' + (nextLocked ? 'disabled' : 'onclick="navNext()"') + '>Next &#8594;</button>';
+        navHTML += '<button class="btn-nav btn-next ' + (nextLocked ? 'locked' : '') + '" id="btnNext" ' + (nextLocked ? 'disabled' : 'onclick="navNext()"') + '>' + T('Next', 'Siguiente') + ' &#8594;' + (nextLocked ? ' <span class="lock-text">(' + T('pass quiz to unlock', 'pasar quiz para desbloquear') + ')</span>' : '') + '</button>';
     }
     navHTML += '</div>';
 
-    content.innerHTML = '<h1>' + mod.title + '</h1><p style="color:#64748b;font-size:0.85rem;margin-bottom:24px;">' + mod.desc + '</p>' + lesson.content + quizHTML + navHTML;
+    var modTitle = currentLang === 'es' ? (mod.title_es || mod.title) : mod.title;
+    var modDesc = currentLang === 'es' ? (mod.desc_es || mod.desc) : mod.desc;
+    var lessonContent = currentLang === 'es' ? (lesson.content_es || lesson.content) : lesson.content;
+    content.innerHTML = '<h1>' + modTitle + '</h1><p style="color:#64748b;font-size:0.85rem;margin-bottom:24px;">' + modDesc + '</p>' + lessonContent + quizHTML + navHTML;
     renderSidebar();
     content.scrollTop = 0;
     document.getElementById('sidebar').classList.remove('open');
@@ -432,12 +513,12 @@ function submitQuiz() {
     if (pass) {
         progress[currentLesson.id] = true;
         localStorage.setItem('manager_course_progress', JSON.stringify(progress));
-        resultDiv.innerHTML = '<div class="quiz-result pass"><h3 style="color:#22c55e;">' + pct + '% -- Passed!</h3><p style="color:#94a3b8;">You scored ' + correct + '/' + total + '. Next lesson unlocked.</p></div>';
+        resultDiv.innerHTML = '<div class="quiz-result pass"><h3 style="color:#22c55e;">' + pct + '% -- ' + T('Passed!', 'Aprobado!') + '</h3><p style="color:#94a3b8;">' + T('You scored ' + correct + '/' + total + '. Next lesson unlocked.', 'Obtuviste ' + correct + '/' + total + '. Siguiente leccion desbloqueada.') + '</p></div>';
         var btnNext = document.getElementById('btnNext');
-        if (btnNext) { btnNext.disabled = false; btnNext.classList.remove('locked'); btnNext.onclick = navNext; }
+        if (btnNext) { btnNext.disabled = false; btnNext.classList.remove('locked'); var lockText = btnNext.querySelector('.lock-text'); if (lockText) lockText.remove(); btnNext.onclick = navNext; }
     } else {
-        resultDiv.innerHTML = '<div class="quiz-result fail"><h3 style="color:#ef4444;">' + pct + '% -- Not yet</h3><p style="color:#94a3b8;">You need 80% to advance. Review the lesson and try again.</p>' +
-            '<button class="btn-quiz" style="margin-top:12px;" onclick="retryQuiz()">Retry Quiz</button></div>';
+        resultDiv.innerHTML = '<div class="quiz-result fail"><h3 style="color:#ef4444;">' + pct + '% -- ' + T('Not yet', 'Aun no') + '</h3><p style="color:#94a3b8;">' + T('You need 80% to advance. Review the lesson and try again.', 'Necesitas 80% para avanzar. Revisa la leccion e intenta de nuevo.') + '</p>' +
+            '<button class="btn-quiz" style="margin-top:12px;" onclick="retryQuiz()">' + T('Retry Quiz', 'Reintentar Quiz') + '</button></div>';
     }
 
     document.getElementById('submitQuiz').style.display = 'none';
@@ -479,6 +560,7 @@ function navPrev() {
 
 // Init
 renderSidebar();
+setLang(currentLang);
 </script>
 </body>
 </html>
