@@ -89,9 +89,14 @@ async def academy():
 
 # ========== API ==========
 
+MANAGER_PROFILE_COLS = {"email", "scores", "vak_scores", "vak_percentages", "vak_primary",
+                        "disc_scores", "disc_primary", "combo_type", "primary_type",
+                        "famous_match", "source"}
+
 @app.post("/api/manager-profile")
 async def save_profile(data: dict):
-    result = await save_to_supabase("manager_profiles", data)
+    clean = {k: v for k, v in data.items() if k in MANAGER_PROFILE_COLS}
+    result = await save_to_supabase("manager_profiles", clean)
     if not result:
         raise HTTPException(500, "Failed to save profile")
     return {"status": "ok"}
